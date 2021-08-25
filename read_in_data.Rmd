@@ -1,0 +1,1978 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Package ID: knb-lter-luq.20.4923052 Cataloging System:https://pasta.edirepository.org.
+# Data set title: Chemistry of stream water from the Luquillo Mountains.
+# Data set creator:  William H. McDowell -  
+# Contact:  William H. McDowell -    - wmcdowell@lternet.edu
+# Stylesheet v2.11 for metadata conversion into program: John H. Porter, Univ. Virginia, jporter@virginia.edu 
+
+inUrl1  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/6e00fe7811c8fa5ea3919e6ae02775f1" 
+infile1 <- tempfile()
+try(download.file(inUrl1,infile1,method="curl"))
+if (is.na(file.size(infile1))) download.file(inUrl1,infile1,method="auto")
+
+                   
+ dt1 <-read.csv(infile1,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile1)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt1$Sample_ID)!="factor") dt1$Sample_ID<- as.factor(dt1$Sample_ID)
+if (class(dt1$Code)=="factor") dt1$Code <-as.numeric(levels(dt1$Code))[as.integer(dt1$Code) ]               
+if (class(dt1$Code)=="character") dt1$Code <-as.numeric(dt1$Code)                                   
+# attempting to convert dt1$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp1Sample_Date<-as.Date(dt1$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp1Sample_Date) == length(tmp1Sample_Date[!is.na(tmp1Sample_Date)])){dt1$Sample_Date <- tmp1Sample_Date } else {print("Date conversion failed for dt1$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp1Sample_Date) 
+if (class(dt1$Sample_Time)=="factor") dt1$Sample_Time <-as.numeric(levels(dt1$Sample_Time))[as.integer(dt1$Sample_Time) ]               
+if (class(dt1$Sample_Time)=="character") dt1$Sample_Time <-as.numeric(dt1$Sample_Time)
+if (class(dt1$Gage_Ht)=="factor") dt1$Gage_Ht <-as.numeric(levels(dt1$Gage_Ht))[as.integer(dt1$Gage_Ht) ]               
+if (class(dt1$Gage_Ht)=="character") dt1$Gage_Ht <-as.numeric(dt1$Gage_Ht)
+if (class(dt1$Temp)=="factor") dt1$Temp <-as.numeric(levels(dt1$Temp))[as.integer(dt1$Temp) ]               
+if (class(dt1$Temp)=="character") dt1$Temp <-as.numeric(dt1$Temp)
+if (class(dt1$pH)=="factor") dt1$pH <-as.numeric(levels(dt1$pH))[as.integer(dt1$pH) ]               
+if (class(dt1$pH)=="character") dt1$pH <-as.numeric(dt1$pH)
+if (class(dt1$Cond)=="factor") dt1$Cond <-as.numeric(levels(dt1$Cond))[as.integer(dt1$Cond) ]               
+if (class(dt1$Cond)=="character") dt1$Cond <-as.numeric(dt1$Cond)
+if (class(dt1$Cl)=="factor") dt1$Cl <-as.numeric(levels(dt1$Cl))[as.integer(dt1$Cl) ]               
+if (class(dt1$Cl)=="character") dt1$Cl <-as.numeric(dt1$Cl)
+if (class(dt1$NO3.hyphen.N)=="factor") dt1$NO3.hyphen.N <-as.numeric(levels(dt1$NO3.hyphen.N))[as.integer(dt1$NO3.hyphen.N) ]               
+if (class(dt1$NO3.hyphen.N)=="character") dt1$NO3.hyphen.N <-as.numeric(dt1$NO3.hyphen.N)
+if (class(dt1$SO4.hyphen.S)=="factor") dt1$SO4.hyphen.S <-as.numeric(levels(dt1$SO4.hyphen.S))[as.integer(dt1$SO4.hyphen.S) ]               
+if (class(dt1$SO4.hyphen.S)=="character") dt1$SO4.hyphen.S <-as.numeric(dt1$SO4.hyphen.S)
+if (class(dt1$Na)=="factor") dt1$Na <-as.numeric(levels(dt1$Na))[as.integer(dt1$Na) ]               
+if (class(dt1$Na)=="character") dt1$Na <-as.numeric(dt1$Na)
+if (class(dt1$K)=="factor") dt1$K <-as.numeric(levels(dt1$K))[as.integer(dt1$K) ]               
+if (class(dt1$K)=="character") dt1$K <-as.numeric(dt1$K)
+if (class(dt1$Mg)=="factor") dt1$Mg <-as.numeric(levels(dt1$Mg))[as.integer(dt1$Mg) ]               
+if (class(dt1$Mg)=="character") dt1$Mg <-as.numeric(dt1$Mg)
+if (class(dt1$Ca)=="factor") dt1$Ca <-as.numeric(levels(dt1$Ca))[as.integer(dt1$Ca) ]               
+if (class(dt1$Ca)=="character") dt1$Ca <-as.numeric(dt1$Ca)
+if (class(dt1$NH4.hyphen.N)=="factor") dt1$NH4.hyphen.N <-as.numeric(levels(dt1$NH4.hyphen.N))[as.integer(dt1$NH4.hyphen.N) ]               
+if (class(dt1$NH4.hyphen.N)=="character") dt1$NH4.hyphen.N <-as.numeric(dt1$NH4.hyphen.N)
+if (class(dt1$PO4.hyphen.P)=="factor") dt1$PO4.hyphen.P <-as.numeric(levels(dt1$PO4.hyphen.P))[as.integer(dt1$PO4.hyphen.P) ]               
+if (class(dt1$PO4.hyphen.P)=="character") dt1$PO4.hyphen.P <-as.numeric(dt1$PO4.hyphen.P)
+if (class(dt1$DOC)=="factor") dt1$DOC <-as.numeric(levels(dt1$DOC))[as.integer(dt1$DOC) ]               
+if (class(dt1$DOC)=="character") dt1$DOC <-as.numeric(dt1$DOC)
+if (class(dt1$DIC)=="factor") dt1$DIC <-as.numeric(levels(dt1$DIC))[as.integer(dt1$DIC) ]               
+if (class(dt1$DIC)=="character") dt1$DIC <-as.numeric(dt1$DIC)
+if (class(dt1$TDN)=="factor") dt1$TDN <-as.numeric(levels(dt1$TDN))[as.integer(dt1$TDN) ]               
+if (class(dt1$TDN)=="character") dt1$TDN <-as.numeric(dt1$TDN)
+if (class(dt1$TDP)=="factor") dt1$TDP <-as.numeric(levels(dt1$TDP))[as.integer(dt1$TDP) ]               
+if (class(dt1$TDP)=="character") dt1$TDP <-as.numeric(dt1$TDP)
+if (class(dt1$SiO2)=="factor") dt1$SiO2 <-as.numeric(levels(dt1$SiO2))[as.integer(dt1$SiO2) ]               
+if (class(dt1$SiO2)=="character") dt1$SiO2 <-as.numeric(dt1$SiO2)
+if (class(dt1$DON)=="factor") dt1$DON <-as.numeric(levels(dt1$DON))[as.integer(dt1$DON) ]               
+if (class(dt1$DON)=="character") dt1$DON <-as.numeric(dt1$DON)
+if (class(dt1$TSS)=="factor") dt1$TSS <-as.numeric(levels(dt1$TSS))[as.integer(dt1$TSS) ]               
+if (class(dt1$TSS)=="character") dt1$TSS <-as.numeric(dt1$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt1$Code <- ifelse((trimws(as.character(dt1$Code))==trimws("-9999.00")),NA,dt1$Code)               
+suppressWarnings(dt1$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Code))==as.character(as.numeric("-9999.00"))),NA,dt1$Code))
+dt1$Sample_Time <- ifelse((trimws(as.character(dt1$Sample_Time))==trimws("-9999")),NA,dt1$Sample_Time)               
+suppressWarnings(dt1$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt1$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt1$Sample_Time))
+dt1$Gage_Ht <- ifelse((trimws(as.character(dt1$Gage_Ht))==trimws("-9999.00")),NA,dt1$Gage_Ht)               
+suppressWarnings(dt1$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt1$Gage_Ht))
+dt1$Gage_Ht <- ifelse((trimws(as.character(dt1$Gage_Ht))==trimws("BLANK")),NA,dt1$Gage_Ht)               
+suppressWarnings(dt1$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt1$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt1$Gage_Ht))
+dt1$Temp <- ifelse((trimws(as.character(dt1$Temp))==trimws("-9999.00")),NA,dt1$Temp)               
+suppressWarnings(dt1$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Temp))==as.character(as.numeric("-9999.00"))),NA,dt1$Temp))
+dt1$pH <- ifelse((trimws(as.character(dt1$pH))==trimws("-9999.00")),NA,dt1$pH)               
+suppressWarnings(dt1$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$pH))==as.character(as.numeric("-9999.00"))),NA,dt1$pH))
+dt1$Cond <- ifelse((trimws(as.character(dt1$Cond))==trimws("-9999.00")),NA,dt1$Cond)               
+suppressWarnings(dt1$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Cond))==as.character(as.numeric("-9999.00"))),NA,dt1$Cond))
+dt1$Cl <- ifelse((trimws(as.character(dt1$Cl))==trimws("-9999.00")),NA,dt1$Cl)               
+suppressWarnings(dt1$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Cl))==as.character(as.numeric("-9999.00"))),NA,dt1$Cl))
+dt1$SO4.hyphen.S <- ifelse((trimws(as.character(dt1$SO4.hyphen.S))==trimws("-9999.00")),NA,dt1$SO4.hyphen.S)               
+suppressWarnings(dt1$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt1$SO4.hyphen.S))
+dt1$Na <- ifelse((trimws(as.character(dt1$Na))==trimws("-9999.00")),NA,dt1$Na)               
+suppressWarnings(dt1$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Na))==as.character(as.numeric("-9999.00"))),NA,dt1$Na))
+dt1$K <- ifelse((trimws(as.character(dt1$K))==trimws("-9999.00")),NA,dt1$K)               
+suppressWarnings(dt1$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$K))==as.character(as.numeric("-9999.00"))),NA,dt1$K))
+dt1$Mg <- ifelse((trimws(as.character(dt1$Mg))==trimws("-9999.00")),NA,dt1$Mg)               
+suppressWarnings(dt1$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Mg))==as.character(as.numeric("-9999.00"))),NA,dt1$Mg))
+dt1$Ca <- ifelse((trimws(as.character(dt1$Ca))==trimws("-9999.00")),NA,dt1$Ca)               
+suppressWarnings(dt1$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$Ca))==as.character(as.numeric("-9999.00"))),NA,dt1$Ca))
+dt1$NH4.hyphen.N <- ifelse((trimws(as.character(dt1$NH4.hyphen.N))==trimws("-9999.00")),NA,dt1$NH4.hyphen.N)               
+suppressWarnings(dt1$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt1$NH4.hyphen.N))
+dt1$PO4.hyphen.P <- ifelse((trimws(as.character(dt1$PO4.hyphen.P))==trimws("-9999.00")),NA,dt1$PO4.hyphen.P)               
+suppressWarnings(dt1$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt1$PO4.hyphen.P))
+dt1$DIC <- ifelse((trimws(as.character(dt1$DIC))==trimws("-9999.00")),NA,dt1$DIC)               
+suppressWarnings(dt1$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$DIC))==as.character(as.numeric("-9999.00"))),NA,dt1$DIC))
+dt1$TDN <- ifelse((trimws(as.character(dt1$TDN))==trimws("-9999.00")),NA,dt1$TDN)               
+suppressWarnings(dt1$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$TDN))==as.character(as.numeric("-9999.00"))),NA,dt1$TDN))
+dt1$TDP <- ifelse((trimws(as.character(dt1$TDP))==trimws("-9999.00")),NA,dt1$TDP)               
+suppressWarnings(dt1$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$TDP))==as.character(as.numeric("-9999.00"))),NA,dt1$TDP))
+dt1$SiO2 <- ifelse((trimws(as.character(dt1$SiO2))==trimws("-9999.00")),NA,dt1$SiO2)               
+suppressWarnings(dt1$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt1$SiO2))
+dt1$DON <- ifelse((trimws(as.character(dt1$DON))==trimws("-9999.00")),NA,dt1$DON)               
+suppressWarnings(dt1$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$DON))==as.character(as.numeric("-9999.00"))),NA,dt1$DON))
+dt1$TSS <- ifelse((trimws(as.character(dt1$TSS))==trimws("-9999.00")),NA,dt1$TSS)               
+suppressWarnings(dt1$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt1$TSS))==as.character(as.numeric("-9999.00"))),NA,dt1$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt1)                            
+attach(dt1)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt1$Sample_ID))
+detach(dt1)               
+         
+
+inUrl2  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/bae8ee76ac8e810f1ce80b14630d707d" 
+infile2 <- tempfile()
+try(download.file(inUrl2,infile2,method="curl"))
+if (is.na(file.size(infile2))) download.file(inUrl2,infile2,method="auto")
+
+                   
+ dt2 <-read.csv(infile2,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile2)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt2$Sample_ID)!="factor") dt2$Sample_ID<- as.factor(dt2$Sample_ID)
+if (class(dt2$Code)=="factor") dt2$Code <-as.numeric(levels(dt2$Code))[as.integer(dt2$Code) ]               
+if (class(dt2$Code)=="character") dt2$Code <-as.numeric(dt2$Code)                                   
+# attempting to convert dt2$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp2Sample_Date<-as.Date(dt2$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp2Sample_Date) == length(tmp2Sample_Date[!is.na(tmp2Sample_Date)])){dt2$Sample_Date <- tmp2Sample_Date } else {print("Date conversion failed for dt2$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp2Sample_Date) 
+if (class(dt2$Sample_Time)=="factor") dt2$Sample_Time <-as.numeric(levels(dt2$Sample_Time))[as.integer(dt2$Sample_Time) ]               
+if (class(dt2$Sample_Time)=="character") dt2$Sample_Time <-as.numeric(dt2$Sample_Time)
+if (class(dt2$Gage_Ht)=="factor") dt2$Gage_Ht <-as.numeric(levels(dt2$Gage_Ht))[as.integer(dt2$Gage_Ht) ]               
+if (class(dt2$Gage_Ht)=="character") dt2$Gage_Ht <-as.numeric(dt2$Gage_Ht)
+if (class(dt2$Temp)=="factor") dt2$Temp <-as.numeric(levels(dt2$Temp))[as.integer(dt2$Temp) ]               
+if (class(dt2$Temp)=="character") dt2$Temp <-as.numeric(dt2$Temp)
+if (class(dt2$pH)=="factor") dt2$pH <-as.numeric(levels(dt2$pH))[as.integer(dt2$pH) ]               
+if (class(dt2$pH)=="character") dt2$pH <-as.numeric(dt2$pH)
+if (class(dt2$Cond)=="factor") dt2$Cond <-as.numeric(levels(dt2$Cond))[as.integer(dt2$Cond) ]               
+if (class(dt2$Cond)=="character") dt2$Cond <-as.numeric(dt2$Cond)
+if (class(dt2$Cl)=="factor") dt2$Cl <-as.numeric(levels(dt2$Cl))[as.integer(dt2$Cl) ]               
+if (class(dt2$Cl)=="character") dt2$Cl <-as.numeric(dt2$Cl)
+if (class(dt2$NO3.hyphen.N)=="factor") dt2$NO3.hyphen.N <-as.numeric(levels(dt2$NO3.hyphen.N))[as.integer(dt2$NO3.hyphen.N) ]               
+if (class(dt2$NO3.hyphen.N)=="character") dt2$NO3.hyphen.N <-as.numeric(dt2$NO3.hyphen.N)
+if (class(dt2$SO4.hyphen.S)=="factor") dt2$SO4.hyphen.S <-as.numeric(levels(dt2$SO4.hyphen.S))[as.integer(dt2$SO4.hyphen.S) ]               
+if (class(dt2$SO4.hyphen.S)=="character") dt2$SO4.hyphen.S <-as.numeric(dt2$SO4.hyphen.S)
+if (class(dt2$Na)=="factor") dt2$Na <-as.numeric(levels(dt2$Na))[as.integer(dt2$Na) ]               
+if (class(dt2$Na)=="character") dt2$Na <-as.numeric(dt2$Na)
+if (class(dt2$K)=="factor") dt2$K <-as.numeric(levels(dt2$K))[as.integer(dt2$K) ]               
+if (class(dt2$K)=="character") dt2$K <-as.numeric(dt2$K)
+if (class(dt2$Mg)=="factor") dt2$Mg <-as.numeric(levels(dt2$Mg))[as.integer(dt2$Mg) ]               
+if (class(dt2$Mg)=="character") dt2$Mg <-as.numeric(dt2$Mg)
+if (class(dt2$Ca)=="factor") dt2$Ca <-as.numeric(levels(dt2$Ca))[as.integer(dt2$Ca) ]               
+if (class(dt2$Ca)=="character") dt2$Ca <-as.numeric(dt2$Ca)
+if (class(dt2$NH4.hyphen.N)=="factor") dt2$NH4.hyphen.N <-as.numeric(levels(dt2$NH4.hyphen.N))[as.integer(dt2$NH4.hyphen.N) ]               
+if (class(dt2$NH4.hyphen.N)=="character") dt2$NH4.hyphen.N <-as.numeric(dt2$NH4.hyphen.N)
+if (class(dt2$PO4.hyphen.P)=="factor") dt2$PO4.hyphen.P <-as.numeric(levels(dt2$PO4.hyphen.P))[as.integer(dt2$PO4.hyphen.P) ]               
+if (class(dt2$PO4.hyphen.P)=="character") dt2$PO4.hyphen.P <-as.numeric(dt2$PO4.hyphen.P)
+if (class(dt2$DOC)=="factor") dt2$DOC <-as.numeric(levels(dt2$DOC))[as.integer(dt2$DOC) ]               
+if (class(dt2$DOC)=="character") dt2$DOC <-as.numeric(dt2$DOC)
+if (class(dt2$DIC)=="factor") dt2$DIC <-as.numeric(levels(dt2$DIC))[as.integer(dt2$DIC) ]               
+if (class(dt2$DIC)=="character") dt2$DIC <-as.numeric(dt2$DIC)
+if (class(dt2$TDN)=="factor") dt2$TDN <-as.numeric(levels(dt2$TDN))[as.integer(dt2$TDN) ]               
+if (class(dt2$TDN)=="character") dt2$TDN <-as.numeric(dt2$TDN)
+if (class(dt2$TDP)=="factor") dt2$TDP <-as.numeric(levels(dt2$TDP))[as.integer(dt2$TDP) ]               
+if (class(dt2$TDP)=="character") dt2$TDP <-as.numeric(dt2$TDP)
+if (class(dt2$SiO2)=="factor") dt2$SiO2 <-as.numeric(levels(dt2$SiO2))[as.integer(dt2$SiO2) ]               
+if (class(dt2$SiO2)=="character") dt2$SiO2 <-as.numeric(dt2$SiO2)
+if (class(dt2$DON)=="factor") dt2$DON <-as.numeric(levels(dt2$DON))[as.integer(dt2$DON) ]               
+if (class(dt2$DON)=="character") dt2$DON <-as.numeric(dt2$DON)
+if (class(dt2$TSS)=="factor") dt2$TSS <-as.numeric(levels(dt2$TSS))[as.integer(dt2$TSS) ]               
+if (class(dt2$TSS)=="character") dt2$TSS <-as.numeric(dt2$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt2$Code <- ifelse((trimws(as.character(dt2$Code))==trimws("-9999.00")),NA,dt2$Code)               
+suppressWarnings(dt2$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Code))==as.character(as.numeric("-9999.00"))),NA,dt2$Code))
+dt2$Sample_Time <- ifelse((trimws(as.character(dt2$Sample_Time))==trimws("-9999")),NA,dt2$Sample_Time)               
+suppressWarnings(dt2$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt2$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt2$Sample_Time))
+dt2$Gage_Ht <- ifelse((trimws(as.character(dt2$Gage_Ht))==trimws("-9999.00")),NA,dt2$Gage_Ht)               
+suppressWarnings(dt2$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt2$Gage_Ht))
+dt2$Gage_Ht <- ifelse((trimws(as.character(dt2$Gage_Ht))==trimws("BLANK")),NA,dt2$Gage_Ht)               
+suppressWarnings(dt2$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt2$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt2$Gage_Ht))
+dt2$Temp <- ifelse((trimws(as.character(dt2$Temp))==trimws("-9999.00")),NA,dt2$Temp)               
+suppressWarnings(dt2$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Temp))==as.character(as.numeric("-9999.00"))),NA,dt2$Temp))
+dt2$pH <- ifelse((trimws(as.character(dt2$pH))==trimws("-9999.00")),NA,dt2$pH)               
+suppressWarnings(dt2$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$pH))==as.character(as.numeric("-9999.00"))),NA,dt2$pH))
+dt2$Cond <- ifelse((trimws(as.character(dt2$Cond))==trimws("-9999.00")),NA,dt2$Cond)               
+suppressWarnings(dt2$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Cond))==as.character(as.numeric("-9999.00"))),NA,dt2$Cond))
+dt2$Cl <- ifelse((trimws(as.character(dt2$Cl))==trimws("-9999.00")),NA,dt2$Cl)               
+suppressWarnings(dt2$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Cl))==as.character(as.numeric("-9999.00"))),NA,dt2$Cl))
+dt2$SO4.hyphen.S <- ifelse((trimws(as.character(dt2$SO4.hyphen.S))==trimws("-9999.00")),NA,dt2$SO4.hyphen.S)               
+suppressWarnings(dt2$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt2$SO4.hyphen.S))
+dt2$Na <- ifelse((trimws(as.character(dt2$Na))==trimws("-9999.00")),NA,dt2$Na)               
+suppressWarnings(dt2$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Na))==as.character(as.numeric("-9999.00"))),NA,dt2$Na))
+dt2$K <- ifelse((trimws(as.character(dt2$K))==trimws("-9999.00")),NA,dt2$K)               
+suppressWarnings(dt2$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$K))==as.character(as.numeric("-9999.00"))),NA,dt2$K))
+dt2$Mg <- ifelse((trimws(as.character(dt2$Mg))==trimws("-9999.00")),NA,dt2$Mg)               
+suppressWarnings(dt2$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Mg))==as.character(as.numeric("-9999.00"))),NA,dt2$Mg))
+dt2$Ca <- ifelse((trimws(as.character(dt2$Ca))==trimws("-9999.00")),NA,dt2$Ca)               
+suppressWarnings(dt2$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$Ca))==as.character(as.numeric("-9999.00"))),NA,dt2$Ca))
+dt2$NH4.hyphen.N <- ifelse((trimws(as.character(dt2$NH4.hyphen.N))==trimws("-9999.00")),NA,dt2$NH4.hyphen.N)               
+suppressWarnings(dt2$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt2$NH4.hyphen.N))
+dt2$PO4.hyphen.P <- ifelse((trimws(as.character(dt2$PO4.hyphen.P))==trimws("-9999.00")),NA,dt2$PO4.hyphen.P)               
+suppressWarnings(dt2$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt2$PO4.hyphen.P))
+dt2$DIC <- ifelse((trimws(as.character(dt2$DIC))==trimws("-9999.00")),NA,dt2$DIC)               
+suppressWarnings(dt2$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$DIC))==as.character(as.numeric("-9999.00"))),NA,dt2$DIC))
+dt2$TDN <- ifelse((trimws(as.character(dt2$TDN))==trimws("-9999.00")),NA,dt2$TDN)               
+suppressWarnings(dt2$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$TDN))==as.character(as.numeric("-9999.00"))),NA,dt2$TDN))
+dt2$TDP <- ifelse((trimws(as.character(dt2$TDP))==trimws("-9999.00")),NA,dt2$TDP)               
+suppressWarnings(dt2$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$TDP))==as.character(as.numeric("-9999.00"))),NA,dt2$TDP))
+dt2$SiO2 <- ifelse((trimws(as.character(dt2$SiO2))==trimws("-9999.00")),NA,dt2$SiO2)               
+suppressWarnings(dt2$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt2$SiO2))
+dt2$DON <- ifelse((trimws(as.character(dt2$DON))==trimws("-9999.00")),NA,dt2$DON)               
+suppressWarnings(dt2$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$DON))==as.character(as.numeric("-9999.00"))),NA,dt2$DON))
+dt2$TSS <- ifelse((trimws(as.character(dt2$TSS))==trimws("-9999.00")),NA,dt2$TSS)               
+suppressWarnings(dt2$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt2$TSS))==as.character(as.numeric("-9999.00"))),NA,dt2$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt2)                            
+attach(dt2)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt2$Sample_ID))
+detach(dt2)               
+         
+
+inUrl3  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/58eb2e035594eb9505390166106e492c" 
+infile3 <- tempfile()
+try(download.file(inUrl3,infile3,method="curl"))
+if (is.na(file.size(infile3))) download.file(inUrl3,infile3,method="auto")
+
+                   
+ dt3 <-read.csv(infile3,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile3)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt3$Sample_ID)!="factor") dt3$Sample_ID<- as.factor(dt3$Sample_ID)
+if (class(dt3$Code)=="factor") dt3$Code <-as.numeric(levels(dt3$Code))[as.integer(dt3$Code) ]               
+if (class(dt3$Code)=="character") dt3$Code <-as.numeric(dt3$Code)                                   
+# attempting to convert dt3$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp3Sample_Date<-as.Date(dt3$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp3Sample_Date) == length(tmp3Sample_Date[!is.na(tmp3Sample_Date)])){dt3$Sample_Date <- tmp3Sample_Date } else {print("Date conversion failed for dt3$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp3Sample_Date) 
+if (class(dt3$Sample_Time)=="factor") dt3$Sample_Time <-as.numeric(levels(dt3$Sample_Time))[as.integer(dt3$Sample_Time) ]               
+if (class(dt3$Sample_Time)=="character") dt3$Sample_Time <-as.numeric(dt3$Sample_Time)
+if (class(dt3$Gage_Ht)=="factor") dt3$Gage_Ht <-as.numeric(levels(dt3$Gage_Ht))[as.integer(dt3$Gage_Ht) ]               
+if (class(dt3$Gage_Ht)=="character") dt3$Gage_Ht <-as.numeric(dt3$Gage_Ht)
+if (class(dt3$Temp)=="factor") dt3$Temp <-as.numeric(levels(dt3$Temp))[as.integer(dt3$Temp) ]               
+if (class(dt3$Temp)=="character") dt3$Temp <-as.numeric(dt3$Temp)
+if (class(dt3$pH)=="factor") dt3$pH <-as.numeric(levels(dt3$pH))[as.integer(dt3$pH) ]               
+if (class(dt3$pH)=="character") dt3$pH <-as.numeric(dt3$pH)
+if (class(dt3$Cond)=="factor") dt3$Cond <-as.numeric(levels(dt3$Cond))[as.integer(dt3$Cond) ]               
+if (class(dt3$Cond)=="character") dt3$Cond <-as.numeric(dt3$Cond)
+if (class(dt3$Cl)=="factor") dt3$Cl <-as.numeric(levels(dt3$Cl))[as.integer(dt3$Cl) ]               
+if (class(dt3$Cl)=="character") dt3$Cl <-as.numeric(dt3$Cl)
+if (class(dt3$NO3.hyphen.N)=="factor") dt3$NO3.hyphen.N <-as.numeric(levels(dt3$NO3.hyphen.N))[as.integer(dt3$NO3.hyphen.N) ]               
+if (class(dt3$NO3.hyphen.N)=="character") dt3$NO3.hyphen.N <-as.numeric(dt3$NO3.hyphen.N)
+if (class(dt3$SO4.hyphen.S)=="factor") dt3$SO4.hyphen.S <-as.numeric(levels(dt3$SO4.hyphen.S))[as.integer(dt3$SO4.hyphen.S) ]               
+if (class(dt3$SO4.hyphen.S)=="character") dt3$SO4.hyphen.S <-as.numeric(dt3$SO4.hyphen.S)
+if (class(dt3$Na)=="factor") dt3$Na <-as.numeric(levels(dt3$Na))[as.integer(dt3$Na) ]               
+if (class(dt3$Na)=="character") dt3$Na <-as.numeric(dt3$Na)
+if (class(dt3$K)=="factor") dt3$K <-as.numeric(levels(dt3$K))[as.integer(dt3$K) ]               
+if (class(dt3$K)=="character") dt3$K <-as.numeric(dt3$K)
+if (class(dt3$Mg)=="factor") dt3$Mg <-as.numeric(levels(dt3$Mg))[as.integer(dt3$Mg) ]               
+if (class(dt3$Mg)=="character") dt3$Mg <-as.numeric(dt3$Mg)
+if (class(dt3$Ca)=="factor") dt3$Ca <-as.numeric(levels(dt3$Ca))[as.integer(dt3$Ca) ]               
+if (class(dt3$Ca)=="character") dt3$Ca <-as.numeric(dt3$Ca)
+if (class(dt3$NH4.hyphen.N)=="factor") dt3$NH4.hyphen.N <-as.numeric(levels(dt3$NH4.hyphen.N))[as.integer(dt3$NH4.hyphen.N) ]               
+if (class(dt3$NH4.hyphen.N)=="character") dt3$NH4.hyphen.N <-as.numeric(dt3$NH4.hyphen.N)
+if (class(dt3$PO4.hyphen.P)=="factor") dt3$PO4.hyphen.P <-as.numeric(levels(dt3$PO4.hyphen.P))[as.integer(dt3$PO4.hyphen.P) ]               
+if (class(dt3$PO4.hyphen.P)=="character") dt3$PO4.hyphen.P <-as.numeric(dt3$PO4.hyphen.P)
+if (class(dt3$DOC)=="factor") dt3$DOC <-as.numeric(levels(dt3$DOC))[as.integer(dt3$DOC) ]               
+if (class(dt3$DOC)=="character") dt3$DOC <-as.numeric(dt3$DOC)
+if (class(dt3$DIC)=="factor") dt3$DIC <-as.numeric(levels(dt3$DIC))[as.integer(dt3$DIC) ]               
+if (class(dt3$DIC)=="character") dt3$DIC <-as.numeric(dt3$DIC)
+if (class(dt3$TDN)=="factor") dt3$TDN <-as.numeric(levels(dt3$TDN))[as.integer(dt3$TDN) ]               
+if (class(dt3$TDN)=="character") dt3$TDN <-as.numeric(dt3$TDN)
+if (class(dt3$TDP)=="factor") dt3$TDP <-as.numeric(levels(dt3$TDP))[as.integer(dt3$TDP) ]               
+if (class(dt3$TDP)=="character") dt3$TDP <-as.numeric(dt3$TDP)
+if (class(dt3$SiO2)=="factor") dt3$SiO2 <-as.numeric(levels(dt3$SiO2))[as.integer(dt3$SiO2) ]               
+if (class(dt3$SiO2)=="character") dt3$SiO2 <-as.numeric(dt3$SiO2)
+if (class(dt3$DON)=="factor") dt3$DON <-as.numeric(levels(dt3$DON))[as.integer(dt3$DON) ]               
+if (class(dt3$DON)=="character") dt3$DON <-as.numeric(dt3$DON)
+if (class(dt3$TSS)=="factor") dt3$TSS <-as.numeric(levels(dt3$TSS))[as.integer(dt3$TSS) ]               
+if (class(dt3$TSS)=="character") dt3$TSS <-as.numeric(dt3$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt3$Code <- ifelse((trimws(as.character(dt3$Code))==trimws("-9999.00")),NA,dt3$Code)               
+suppressWarnings(dt3$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Code))==as.character(as.numeric("-9999.00"))),NA,dt3$Code))
+dt3$Sample_Time <- ifelse((trimws(as.character(dt3$Sample_Time))==trimws("-9999")),NA,dt3$Sample_Time)               
+suppressWarnings(dt3$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt3$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt3$Sample_Time))
+dt3$Gage_Ht <- ifelse((trimws(as.character(dt3$Gage_Ht))==trimws("-9999.00")),NA,dt3$Gage_Ht)               
+suppressWarnings(dt3$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt3$Gage_Ht))
+dt3$Gage_Ht <- ifelse((trimws(as.character(dt3$Gage_Ht))==trimws("BLANK")),NA,dt3$Gage_Ht)               
+suppressWarnings(dt3$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt3$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt3$Gage_Ht))
+dt3$Temp <- ifelse((trimws(as.character(dt3$Temp))==trimws("-9999.00")),NA,dt3$Temp)               
+suppressWarnings(dt3$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Temp))==as.character(as.numeric("-9999.00"))),NA,dt3$Temp))
+dt3$pH <- ifelse((trimws(as.character(dt3$pH))==trimws("-9999.00")),NA,dt3$pH)               
+suppressWarnings(dt3$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$pH))==as.character(as.numeric("-9999.00"))),NA,dt3$pH))
+dt3$Cond <- ifelse((trimws(as.character(dt3$Cond))==trimws("-9999.00")),NA,dt3$Cond)               
+suppressWarnings(dt3$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Cond))==as.character(as.numeric("-9999.00"))),NA,dt3$Cond))
+dt3$Cl <- ifelse((trimws(as.character(dt3$Cl))==trimws("-9999.00")),NA,dt3$Cl)               
+suppressWarnings(dt3$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Cl))==as.character(as.numeric("-9999.00"))),NA,dt3$Cl))
+dt3$SO4.hyphen.S <- ifelse((trimws(as.character(dt3$SO4.hyphen.S))==trimws("-9999.00")),NA,dt3$SO4.hyphen.S)               
+suppressWarnings(dt3$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt3$SO4.hyphen.S))
+dt3$Na <- ifelse((trimws(as.character(dt3$Na))==trimws("-9999.00")),NA,dt3$Na)               
+suppressWarnings(dt3$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Na))==as.character(as.numeric("-9999.00"))),NA,dt3$Na))
+dt3$K <- ifelse((trimws(as.character(dt3$K))==trimws("-9999.00")),NA,dt3$K)               
+suppressWarnings(dt3$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$K))==as.character(as.numeric("-9999.00"))),NA,dt3$K))
+dt3$Mg <- ifelse((trimws(as.character(dt3$Mg))==trimws("-9999.00")),NA,dt3$Mg)               
+suppressWarnings(dt3$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Mg))==as.character(as.numeric("-9999.00"))),NA,dt3$Mg))
+dt3$Ca <- ifelse((trimws(as.character(dt3$Ca))==trimws("-9999.00")),NA,dt3$Ca)               
+suppressWarnings(dt3$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$Ca))==as.character(as.numeric("-9999.00"))),NA,dt3$Ca))
+dt3$NH4.hyphen.N <- ifelse((trimws(as.character(dt3$NH4.hyphen.N))==trimws("-9999.00")),NA,dt3$NH4.hyphen.N)               
+suppressWarnings(dt3$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt3$NH4.hyphen.N))
+dt3$PO4.hyphen.P <- ifelse((trimws(as.character(dt3$PO4.hyphen.P))==trimws("-9999.00")),NA,dt3$PO4.hyphen.P)               
+suppressWarnings(dt3$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt3$PO4.hyphen.P))
+dt3$DIC <- ifelse((trimws(as.character(dt3$DIC))==trimws("-9999.00")),NA,dt3$DIC)               
+suppressWarnings(dt3$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$DIC))==as.character(as.numeric("-9999.00"))),NA,dt3$DIC))
+dt3$TDN <- ifelse((trimws(as.character(dt3$TDN))==trimws("-9999.00")),NA,dt3$TDN)               
+suppressWarnings(dt3$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$TDN))==as.character(as.numeric("-9999.00"))),NA,dt3$TDN))
+dt3$TDP <- ifelse((trimws(as.character(dt3$TDP))==trimws("-9999.00")),NA,dt3$TDP)               
+suppressWarnings(dt3$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$TDP))==as.character(as.numeric("-9999.00"))),NA,dt3$TDP))
+dt3$SiO2 <- ifelse((trimws(as.character(dt3$SiO2))==trimws("-9999.00")),NA,dt3$SiO2)               
+suppressWarnings(dt3$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt3$SiO2))
+dt3$DON <- ifelse((trimws(as.character(dt3$DON))==trimws("-9999.00")),NA,dt3$DON)               
+suppressWarnings(dt3$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$DON))==as.character(as.numeric("-9999.00"))),NA,dt3$DON))
+dt3$TSS <- ifelse((trimws(as.character(dt3$TSS))==trimws("-9999.00")),NA,dt3$TSS)               
+suppressWarnings(dt3$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt3$TSS))==as.character(as.numeric("-9999.00"))),NA,dt3$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt3)                            
+attach(dt3)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt3$Sample_ID))
+detach(dt3)               
+         
+
+inUrl4  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/50e936c844f695818a9616534f2dfccd" 
+infile4 <- tempfile()
+try(download.file(inUrl4,infile4,method="curl"))
+if (is.na(file.size(infile4))) download.file(inUrl4,infile4,method="auto")
+
+                   
+ dt4 <-read.csv(infile4,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile4)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt4$Sample_ID)!="factor") dt4$Sample_ID<- as.factor(dt4$Sample_ID)
+if (class(dt4$Code)=="factor") dt4$Code <-as.numeric(levels(dt4$Code))[as.integer(dt4$Code) ]               
+if (class(dt4$Code)=="character") dt4$Code <-as.numeric(dt4$Code)                                   
+# attempting to convert dt4$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp4Sample_Date<-as.Date(dt4$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp4Sample_Date) == length(tmp4Sample_Date[!is.na(tmp4Sample_Date)])){dt4$Sample_Date <- tmp4Sample_Date } else {print("Date conversion failed for dt4$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp4Sample_Date) 
+if (class(dt4$Sample_Time)=="factor") dt4$Sample_Time <-as.numeric(levels(dt4$Sample_Time))[as.integer(dt4$Sample_Time) ]               
+if (class(dt4$Sample_Time)=="character") dt4$Sample_Time <-as.numeric(dt4$Sample_Time)
+if (class(dt4$Gage_Ht)=="factor") dt4$Gage_Ht <-as.numeric(levels(dt4$Gage_Ht))[as.integer(dt4$Gage_Ht) ]               
+if (class(dt4$Gage_Ht)=="character") dt4$Gage_Ht <-as.numeric(dt4$Gage_Ht)
+if (class(dt4$Temp)=="factor") dt4$Temp <-as.numeric(levels(dt4$Temp))[as.integer(dt4$Temp) ]               
+if (class(dt4$Temp)=="character") dt4$Temp <-as.numeric(dt4$Temp)
+if (class(dt4$pH)=="factor") dt4$pH <-as.numeric(levels(dt4$pH))[as.integer(dt4$pH) ]               
+if (class(dt4$pH)=="character") dt4$pH <-as.numeric(dt4$pH)
+if (class(dt4$Cond)=="factor") dt4$Cond <-as.numeric(levels(dt4$Cond))[as.integer(dt4$Cond) ]               
+if (class(dt4$Cond)=="character") dt4$Cond <-as.numeric(dt4$Cond)
+if (class(dt4$Cl)=="factor") dt4$Cl <-as.numeric(levels(dt4$Cl))[as.integer(dt4$Cl) ]               
+if (class(dt4$Cl)=="character") dt4$Cl <-as.numeric(dt4$Cl)
+if (class(dt4$NO3.hyphen.N)=="factor") dt4$NO3.hyphen.N <-as.numeric(levels(dt4$NO3.hyphen.N))[as.integer(dt4$NO3.hyphen.N) ]               
+if (class(dt4$NO3.hyphen.N)=="character") dt4$NO3.hyphen.N <-as.numeric(dt4$NO3.hyphen.N)
+if (class(dt4$SO4.hyphen.S)=="factor") dt4$SO4.hyphen.S <-as.numeric(levels(dt4$SO4.hyphen.S))[as.integer(dt4$SO4.hyphen.S) ]               
+if (class(dt4$SO4.hyphen.S)=="character") dt4$SO4.hyphen.S <-as.numeric(dt4$SO4.hyphen.S)
+if (class(dt4$Na)=="factor") dt4$Na <-as.numeric(levels(dt4$Na))[as.integer(dt4$Na) ]               
+if (class(dt4$Na)=="character") dt4$Na <-as.numeric(dt4$Na)
+if (class(dt4$K)=="factor") dt4$K <-as.numeric(levels(dt4$K))[as.integer(dt4$K) ]               
+if (class(dt4$K)=="character") dt4$K <-as.numeric(dt4$K)
+if (class(dt4$Mg)=="factor") dt4$Mg <-as.numeric(levels(dt4$Mg))[as.integer(dt4$Mg) ]               
+if (class(dt4$Mg)=="character") dt4$Mg <-as.numeric(dt4$Mg)
+if (class(dt4$Ca)=="factor") dt4$Ca <-as.numeric(levels(dt4$Ca))[as.integer(dt4$Ca) ]               
+if (class(dt4$Ca)=="character") dt4$Ca <-as.numeric(dt4$Ca)
+if (class(dt4$NH4.hyphen.N)=="factor") dt4$NH4.hyphen.N <-as.numeric(levels(dt4$NH4.hyphen.N))[as.integer(dt4$NH4.hyphen.N) ]               
+if (class(dt4$NH4.hyphen.N)=="character") dt4$NH4.hyphen.N <-as.numeric(dt4$NH4.hyphen.N)
+if (class(dt4$PO4.hyphen.P)=="factor") dt4$PO4.hyphen.P <-as.numeric(levels(dt4$PO4.hyphen.P))[as.integer(dt4$PO4.hyphen.P) ]               
+if (class(dt4$PO4.hyphen.P)=="character") dt4$PO4.hyphen.P <-as.numeric(dt4$PO4.hyphen.P)
+if (class(dt4$DOC)=="factor") dt4$DOC <-as.numeric(levels(dt4$DOC))[as.integer(dt4$DOC) ]               
+if (class(dt4$DOC)=="character") dt4$DOC <-as.numeric(dt4$DOC)
+if (class(dt4$DIC)=="factor") dt4$DIC <-as.numeric(levels(dt4$DIC))[as.integer(dt4$DIC) ]               
+if (class(dt4$DIC)=="character") dt4$DIC <-as.numeric(dt4$DIC)
+if (class(dt4$TDN)=="factor") dt4$TDN <-as.numeric(levels(dt4$TDN))[as.integer(dt4$TDN) ]               
+if (class(dt4$TDN)=="character") dt4$TDN <-as.numeric(dt4$TDN)
+if (class(dt4$TDP)=="factor") dt4$TDP <-as.numeric(levels(dt4$TDP))[as.integer(dt4$TDP) ]               
+if (class(dt4$TDP)=="character") dt4$TDP <-as.numeric(dt4$TDP)
+if (class(dt4$SiO2)=="factor") dt4$SiO2 <-as.numeric(levels(dt4$SiO2))[as.integer(dt4$SiO2) ]               
+if (class(dt4$SiO2)=="character") dt4$SiO2 <-as.numeric(dt4$SiO2)
+if (class(dt4$DON)=="factor") dt4$DON <-as.numeric(levels(dt4$DON))[as.integer(dt4$DON) ]               
+if (class(dt4$DON)=="character") dt4$DON <-as.numeric(dt4$DON)
+if (class(dt4$TSS)=="factor") dt4$TSS <-as.numeric(levels(dt4$TSS))[as.integer(dt4$TSS) ]               
+if (class(dt4$TSS)=="character") dt4$TSS <-as.numeric(dt4$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt4$Code <- ifelse((trimws(as.character(dt4$Code))==trimws("-9999.00")),NA,dt4$Code)               
+suppressWarnings(dt4$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Code))==as.character(as.numeric("-9999.00"))),NA,dt4$Code))
+dt4$Sample_Time <- ifelse((trimws(as.character(dt4$Sample_Time))==trimws("-9999")),NA,dt4$Sample_Time)               
+suppressWarnings(dt4$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt4$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt4$Sample_Time))
+dt4$Gage_Ht <- ifelse((trimws(as.character(dt4$Gage_Ht))==trimws("-9999.00")),NA,dt4$Gage_Ht)               
+suppressWarnings(dt4$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt4$Gage_Ht))
+dt4$Gage_Ht <- ifelse((trimws(as.character(dt4$Gage_Ht))==trimws("BLANK")),NA,dt4$Gage_Ht)               
+suppressWarnings(dt4$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt4$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt4$Gage_Ht))
+dt4$Temp <- ifelse((trimws(as.character(dt4$Temp))==trimws("-9999.00")),NA,dt4$Temp)               
+suppressWarnings(dt4$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Temp))==as.character(as.numeric("-9999.00"))),NA,dt4$Temp))
+dt4$pH <- ifelse((trimws(as.character(dt4$pH))==trimws("-9999.00")),NA,dt4$pH)               
+suppressWarnings(dt4$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$pH))==as.character(as.numeric("-9999.00"))),NA,dt4$pH))
+dt4$Cond <- ifelse((trimws(as.character(dt4$Cond))==trimws("-9999.00")),NA,dt4$Cond)               
+suppressWarnings(dt4$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Cond))==as.character(as.numeric("-9999.00"))),NA,dt4$Cond))
+dt4$Cl <- ifelse((trimws(as.character(dt4$Cl))==trimws("-9999.00")),NA,dt4$Cl)               
+suppressWarnings(dt4$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Cl))==as.character(as.numeric("-9999.00"))),NA,dt4$Cl))
+dt4$SO4.hyphen.S <- ifelse((trimws(as.character(dt4$SO4.hyphen.S))==trimws("-9999.00")),NA,dt4$SO4.hyphen.S)               
+suppressWarnings(dt4$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt4$SO4.hyphen.S))
+dt4$Na <- ifelse((trimws(as.character(dt4$Na))==trimws("-9999.00")),NA,dt4$Na)               
+suppressWarnings(dt4$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Na))==as.character(as.numeric("-9999.00"))),NA,dt4$Na))
+dt4$K <- ifelse((trimws(as.character(dt4$K))==trimws("-9999.00")),NA,dt4$K)               
+suppressWarnings(dt4$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$K))==as.character(as.numeric("-9999.00"))),NA,dt4$K))
+dt4$Mg <- ifelse((trimws(as.character(dt4$Mg))==trimws("-9999.00")),NA,dt4$Mg)               
+suppressWarnings(dt4$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Mg))==as.character(as.numeric("-9999.00"))),NA,dt4$Mg))
+dt4$Ca <- ifelse((trimws(as.character(dt4$Ca))==trimws("-9999.00")),NA,dt4$Ca)               
+suppressWarnings(dt4$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$Ca))==as.character(as.numeric("-9999.00"))),NA,dt4$Ca))
+dt4$NH4.hyphen.N <- ifelse((trimws(as.character(dt4$NH4.hyphen.N))==trimws("-9999.00")),NA,dt4$NH4.hyphen.N)               
+suppressWarnings(dt4$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt4$NH4.hyphen.N))
+dt4$PO4.hyphen.P <- ifelse((trimws(as.character(dt4$PO4.hyphen.P))==trimws("-9999.00")),NA,dt4$PO4.hyphen.P)               
+suppressWarnings(dt4$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt4$PO4.hyphen.P))
+dt4$DIC <- ifelse((trimws(as.character(dt4$DIC))==trimws("-9999.00")),NA,dt4$DIC)               
+suppressWarnings(dt4$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$DIC))==as.character(as.numeric("-9999.00"))),NA,dt4$DIC))
+dt4$TDN <- ifelse((trimws(as.character(dt4$TDN))==trimws("-9999.00")),NA,dt4$TDN)               
+suppressWarnings(dt4$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$TDN))==as.character(as.numeric("-9999.00"))),NA,dt4$TDN))
+dt4$TDP <- ifelse((trimws(as.character(dt4$TDP))==trimws("-9999.00")),NA,dt4$TDP)               
+suppressWarnings(dt4$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$TDP))==as.character(as.numeric("-9999.00"))),NA,dt4$TDP))
+dt4$SiO2 <- ifelse((trimws(as.character(dt4$SiO2))==trimws("-9999.00")),NA,dt4$SiO2)               
+suppressWarnings(dt4$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt4$SiO2))
+dt4$DON <- ifelse((trimws(as.character(dt4$DON))==trimws("-9999.00")),NA,dt4$DON)               
+suppressWarnings(dt4$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$DON))==as.character(as.numeric("-9999.00"))),NA,dt4$DON))
+dt4$TSS <- ifelse((trimws(as.character(dt4$TSS))==trimws("-9999.00")),NA,dt4$TSS)               
+suppressWarnings(dt4$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt4$TSS))==as.character(as.numeric("-9999.00"))),NA,dt4$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt4)                            
+attach(dt4)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt4$Sample_ID))
+detach(dt4)               
+         
+
+inUrl5  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/7635c4ba775bd23f134e46b2129d7c07" 
+infile5 <- tempfile()
+try(download.file(inUrl5,infile5,method="curl"))
+if (is.na(file.size(infile5))) download.file(inUrl5,infile5,method="auto")
+
+                   
+ dt5 <-read.csv(infile5,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile5)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt5$Sample_ID)!="factor") dt5$Sample_ID<- as.factor(dt5$Sample_ID)
+if (class(dt5$Code)=="factor") dt5$Code <-as.numeric(levels(dt5$Code))[as.integer(dt5$Code) ]               
+if (class(dt5$Code)=="character") dt5$Code <-as.numeric(dt5$Code)                                   
+# attempting to convert dt5$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp5Sample_Date<-as.Date(dt5$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp5Sample_Date) == length(tmp5Sample_Date[!is.na(tmp5Sample_Date)])){dt5$Sample_Date <- tmp5Sample_Date } else {print("Date conversion failed for dt5$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp5Sample_Date) 
+if (class(dt5$Sample_Time)=="factor") dt5$Sample_Time <-as.numeric(levels(dt5$Sample_Time))[as.integer(dt5$Sample_Time) ]               
+if (class(dt5$Sample_Time)=="character") dt5$Sample_Time <-as.numeric(dt5$Sample_Time)
+if (class(dt5$Gage_Ht)=="factor") dt5$Gage_Ht <-as.numeric(levels(dt5$Gage_Ht))[as.integer(dt5$Gage_Ht) ]               
+if (class(dt5$Gage_Ht)=="character") dt5$Gage_Ht <-as.numeric(dt5$Gage_Ht)
+if (class(dt5$Temp)=="factor") dt5$Temp <-as.numeric(levels(dt5$Temp))[as.integer(dt5$Temp) ]               
+if (class(dt5$Temp)=="character") dt5$Temp <-as.numeric(dt5$Temp)
+if (class(dt5$pH)=="factor") dt5$pH <-as.numeric(levels(dt5$pH))[as.integer(dt5$pH) ]               
+if (class(dt5$pH)=="character") dt5$pH <-as.numeric(dt5$pH)
+if (class(dt5$Cond)=="factor") dt5$Cond <-as.numeric(levels(dt5$Cond))[as.integer(dt5$Cond) ]               
+if (class(dt5$Cond)=="character") dt5$Cond <-as.numeric(dt5$Cond)
+if (class(dt5$Cl)=="factor") dt5$Cl <-as.numeric(levels(dt5$Cl))[as.integer(dt5$Cl) ]               
+if (class(dt5$Cl)=="character") dt5$Cl <-as.numeric(dt5$Cl)
+if (class(dt5$NO3.hyphen.N)=="factor") dt5$NO3.hyphen.N <-as.numeric(levels(dt5$NO3.hyphen.N))[as.integer(dt5$NO3.hyphen.N) ]               
+if (class(dt5$NO3.hyphen.N)=="character") dt5$NO3.hyphen.N <-as.numeric(dt5$NO3.hyphen.N)
+if (class(dt5$SO4.hyphen.S)=="factor") dt5$SO4.hyphen.S <-as.numeric(levels(dt5$SO4.hyphen.S))[as.integer(dt5$SO4.hyphen.S) ]               
+if (class(dt5$SO4.hyphen.S)=="character") dt5$SO4.hyphen.S <-as.numeric(dt5$SO4.hyphen.S)
+if (class(dt5$Na)=="factor") dt5$Na <-as.numeric(levels(dt5$Na))[as.integer(dt5$Na) ]               
+if (class(dt5$Na)=="character") dt5$Na <-as.numeric(dt5$Na)
+if (class(dt5$K)=="factor") dt5$K <-as.numeric(levels(dt5$K))[as.integer(dt5$K) ]               
+if (class(dt5$K)=="character") dt5$K <-as.numeric(dt5$K)
+if (class(dt5$Mg)=="factor") dt5$Mg <-as.numeric(levels(dt5$Mg))[as.integer(dt5$Mg) ]               
+if (class(dt5$Mg)=="character") dt5$Mg <-as.numeric(dt5$Mg)
+if (class(dt5$Ca)=="factor") dt5$Ca <-as.numeric(levels(dt5$Ca))[as.integer(dt5$Ca) ]               
+if (class(dt5$Ca)=="character") dt5$Ca <-as.numeric(dt5$Ca)
+if (class(dt5$NH4.hyphen.N)=="factor") dt5$NH4.hyphen.N <-as.numeric(levels(dt5$NH4.hyphen.N))[as.integer(dt5$NH4.hyphen.N) ]               
+if (class(dt5$NH4.hyphen.N)=="character") dt5$NH4.hyphen.N <-as.numeric(dt5$NH4.hyphen.N)
+if (class(dt5$PO4.hyphen.P)=="factor") dt5$PO4.hyphen.P <-as.numeric(levels(dt5$PO4.hyphen.P))[as.integer(dt5$PO4.hyphen.P) ]               
+if (class(dt5$PO4.hyphen.P)=="character") dt5$PO4.hyphen.P <-as.numeric(dt5$PO4.hyphen.P)
+if (class(dt5$DOC)=="factor") dt5$DOC <-as.numeric(levels(dt5$DOC))[as.integer(dt5$DOC) ]               
+if (class(dt5$DOC)=="character") dt5$DOC <-as.numeric(dt5$DOC)
+if (class(dt5$DIC)=="factor") dt5$DIC <-as.numeric(levels(dt5$DIC))[as.integer(dt5$DIC) ]               
+if (class(dt5$DIC)=="character") dt5$DIC <-as.numeric(dt5$DIC)
+if (class(dt5$TDN)=="factor") dt5$TDN <-as.numeric(levels(dt5$TDN))[as.integer(dt5$TDN) ]               
+if (class(dt5$TDN)=="character") dt5$TDN <-as.numeric(dt5$TDN)
+if (class(dt5$TDP)=="factor") dt5$TDP <-as.numeric(levels(dt5$TDP))[as.integer(dt5$TDP) ]               
+if (class(dt5$TDP)=="character") dt5$TDP <-as.numeric(dt5$TDP)
+if (class(dt5$SiO2)=="factor") dt5$SiO2 <-as.numeric(levels(dt5$SiO2))[as.integer(dt5$SiO2) ]               
+if (class(dt5$SiO2)=="character") dt5$SiO2 <-as.numeric(dt5$SiO2)
+if (class(dt5$DON)=="factor") dt5$DON <-as.numeric(levels(dt5$DON))[as.integer(dt5$DON) ]               
+if (class(dt5$DON)=="character") dt5$DON <-as.numeric(dt5$DON)
+if (class(dt5$TSS)=="factor") dt5$TSS <-as.numeric(levels(dt5$TSS))[as.integer(dt5$TSS) ]               
+if (class(dt5$TSS)=="character") dt5$TSS <-as.numeric(dt5$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt5$Code <- ifelse((trimws(as.character(dt5$Code))==trimws("-9999.00")),NA,dt5$Code)               
+suppressWarnings(dt5$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Code))==as.character(as.numeric("-9999.00"))),NA,dt5$Code))
+dt5$Sample_Time <- ifelse((trimws(as.character(dt5$Sample_Time))==trimws("-9999")),NA,dt5$Sample_Time)               
+suppressWarnings(dt5$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt5$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt5$Sample_Time))
+dt5$Gage_Ht <- ifelse((trimws(as.character(dt5$Gage_Ht))==trimws("-9999.00")),NA,dt5$Gage_Ht)               
+suppressWarnings(dt5$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt5$Gage_Ht))
+dt5$Gage_Ht <- ifelse((trimws(as.character(dt5$Gage_Ht))==trimws("BLANK")),NA,dt5$Gage_Ht)               
+suppressWarnings(dt5$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt5$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt5$Gage_Ht))
+dt5$Temp <- ifelse((trimws(as.character(dt5$Temp))==trimws("-9999.00")),NA,dt5$Temp)               
+suppressWarnings(dt5$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Temp))==as.character(as.numeric("-9999.00"))),NA,dt5$Temp))
+dt5$pH <- ifelse((trimws(as.character(dt5$pH))==trimws("-9999.00")),NA,dt5$pH)               
+suppressWarnings(dt5$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$pH))==as.character(as.numeric("-9999.00"))),NA,dt5$pH))
+dt5$Cond <- ifelse((trimws(as.character(dt5$Cond))==trimws("-9999.00")),NA,dt5$Cond)               
+suppressWarnings(dt5$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Cond))==as.character(as.numeric("-9999.00"))),NA,dt5$Cond))
+dt5$Cl <- ifelse((trimws(as.character(dt5$Cl))==trimws("-9999.00")),NA,dt5$Cl)               
+suppressWarnings(dt5$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Cl))==as.character(as.numeric("-9999.00"))),NA,dt5$Cl))
+dt5$SO4.hyphen.S <- ifelse((trimws(as.character(dt5$SO4.hyphen.S))==trimws("-9999.00")),NA,dt5$SO4.hyphen.S)               
+suppressWarnings(dt5$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt5$SO4.hyphen.S))
+dt5$Na <- ifelse((trimws(as.character(dt5$Na))==trimws("-9999.00")),NA,dt5$Na)               
+suppressWarnings(dt5$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Na))==as.character(as.numeric("-9999.00"))),NA,dt5$Na))
+dt5$K <- ifelse((trimws(as.character(dt5$K))==trimws("-9999.00")),NA,dt5$K)               
+suppressWarnings(dt5$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$K))==as.character(as.numeric("-9999.00"))),NA,dt5$K))
+dt5$Mg <- ifelse((trimws(as.character(dt5$Mg))==trimws("-9999.00")),NA,dt5$Mg)               
+suppressWarnings(dt5$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Mg))==as.character(as.numeric("-9999.00"))),NA,dt5$Mg))
+dt5$Ca <- ifelse((trimws(as.character(dt5$Ca))==trimws("-9999.00")),NA,dt5$Ca)               
+suppressWarnings(dt5$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$Ca))==as.character(as.numeric("-9999.00"))),NA,dt5$Ca))
+dt5$NH4.hyphen.N <- ifelse((trimws(as.character(dt5$NH4.hyphen.N))==trimws("-9999.00")),NA,dt5$NH4.hyphen.N)               
+suppressWarnings(dt5$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt5$NH4.hyphen.N))
+dt5$PO4.hyphen.P <- ifelse((trimws(as.character(dt5$PO4.hyphen.P))==trimws("-9999.00")),NA,dt5$PO4.hyphen.P)               
+suppressWarnings(dt5$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt5$PO4.hyphen.P))
+dt5$DIC <- ifelse((trimws(as.character(dt5$DIC))==trimws("-9999.00")),NA,dt5$DIC)               
+suppressWarnings(dt5$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$DIC))==as.character(as.numeric("-9999.00"))),NA,dt5$DIC))
+dt5$TDN <- ifelse((trimws(as.character(dt5$TDN))==trimws("-9999.00")),NA,dt5$TDN)               
+suppressWarnings(dt5$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$TDN))==as.character(as.numeric("-9999.00"))),NA,dt5$TDN))
+dt5$TDP <- ifelse((trimws(as.character(dt5$TDP))==trimws("-9999.00")),NA,dt5$TDP)               
+suppressWarnings(dt5$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$TDP))==as.character(as.numeric("-9999.00"))),NA,dt5$TDP))
+dt5$SiO2 <- ifelse((trimws(as.character(dt5$SiO2))==trimws("-9999.00")),NA,dt5$SiO2)               
+suppressWarnings(dt5$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt5$SiO2))
+dt5$DON <- ifelse((trimws(as.character(dt5$DON))==trimws("-9999.00")),NA,dt5$DON)               
+suppressWarnings(dt5$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$DON))==as.character(as.numeric("-9999.00"))),NA,dt5$DON))
+dt5$TSS <- ifelse((trimws(as.character(dt5$TSS))==trimws("-9999.00")),NA,dt5$TSS)               
+suppressWarnings(dt5$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt5$TSS))==as.character(as.numeric("-9999.00"))),NA,dt5$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt5)                            
+attach(dt5)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt5$Sample_ID))
+detach(dt5)               
+         
+
+inUrl6  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/266905bbeebf3bb59caeee45222eec18" 
+infile6 <- tempfile()
+try(download.file(inUrl6,infile6,method="curl"))
+if (is.na(file.size(infile6))) download.file(inUrl6,infile6,method="auto")
+
+                   
+ dt6 <-read.csv(infile6,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile6)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt6$Sample_ID)!="factor") dt6$Sample_ID<- as.factor(dt6$Sample_ID)
+if (class(dt6$Code)=="factor") dt6$Code <-as.numeric(levels(dt6$Code))[as.integer(dt6$Code) ]               
+if (class(dt6$Code)=="character") dt6$Code <-as.numeric(dt6$Code)                                   
+# attempting to convert dt6$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp6Sample_Date<-as.Date(dt6$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp6Sample_Date) == length(tmp6Sample_Date[!is.na(tmp6Sample_Date)])){dt6$Sample_Date <- tmp6Sample_Date } else {print("Date conversion failed for dt6$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp6Sample_Date) 
+if (class(dt6$Sample_Time)=="factor") dt6$Sample_Time <-as.numeric(levels(dt6$Sample_Time))[as.integer(dt6$Sample_Time) ]               
+if (class(dt6$Sample_Time)=="character") dt6$Sample_Time <-as.numeric(dt6$Sample_Time)
+if (class(dt6$Gage_Ht)=="factor") dt6$Gage_Ht <-as.numeric(levels(dt6$Gage_Ht))[as.integer(dt6$Gage_Ht) ]               
+if (class(dt6$Gage_Ht)=="character") dt6$Gage_Ht <-as.numeric(dt6$Gage_Ht)
+if (class(dt6$Temp)=="factor") dt6$Temp <-as.numeric(levels(dt6$Temp))[as.integer(dt6$Temp) ]               
+if (class(dt6$Temp)=="character") dt6$Temp <-as.numeric(dt6$Temp)
+if (class(dt6$pH)=="factor") dt6$pH <-as.numeric(levels(dt6$pH))[as.integer(dt6$pH) ]               
+if (class(dt6$pH)=="character") dt6$pH <-as.numeric(dt6$pH)
+if (class(dt6$Cond)=="factor") dt6$Cond <-as.numeric(levels(dt6$Cond))[as.integer(dt6$Cond) ]               
+if (class(dt6$Cond)=="character") dt6$Cond <-as.numeric(dt6$Cond)
+if (class(dt6$Cl)=="factor") dt6$Cl <-as.numeric(levels(dt6$Cl))[as.integer(dt6$Cl) ]               
+if (class(dt6$Cl)=="character") dt6$Cl <-as.numeric(dt6$Cl)
+if (class(dt6$NO3.hyphen.N)=="factor") dt6$NO3.hyphen.N <-as.numeric(levels(dt6$NO3.hyphen.N))[as.integer(dt6$NO3.hyphen.N) ]               
+if (class(dt6$NO3.hyphen.N)=="character") dt6$NO3.hyphen.N <-as.numeric(dt6$NO3.hyphen.N)
+if (class(dt6$SO4.hyphen.S)=="factor") dt6$SO4.hyphen.S <-as.numeric(levels(dt6$SO4.hyphen.S))[as.integer(dt6$SO4.hyphen.S) ]               
+if (class(dt6$SO4.hyphen.S)=="character") dt6$SO4.hyphen.S <-as.numeric(dt6$SO4.hyphen.S)
+if (class(dt6$Na)=="factor") dt6$Na <-as.numeric(levels(dt6$Na))[as.integer(dt6$Na) ]               
+if (class(dt6$Na)=="character") dt6$Na <-as.numeric(dt6$Na)
+if (class(dt6$K)=="factor") dt6$K <-as.numeric(levels(dt6$K))[as.integer(dt6$K) ]               
+if (class(dt6$K)=="character") dt6$K <-as.numeric(dt6$K)
+if (class(dt6$Mg)=="factor") dt6$Mg <-as.numeric(levels(dt6$Mg))[as.integer(dt6$Mg) ]               
+if (class(dt6$Mg)=="character") dt6$Mg <-as.numeric(dt6$Mg)
+if (class(dt6$Ca)=="factor") dt6$Ca <-as.numeric(levels(dt6$Ca))[as.integer(dt6$Ca) ]               
+if (class(dt6$Ca)=="character") dt6$Ca <-as.numeric(dt6$Ca)
+if (class(dt6$NH4.hyphen.N)=="factor") dt6$NH4.hyphen.N <-as.numeric(levels(dt6$NH4.hyphen.N))[as.integer(dt6$NH4.hyphen.N) ]               
+if (class(dt6$NH4.hyphen.N)=="character") dt6$NH4.hyphen.N <-as.numeric(dt6$NH4.hyphen.N)
+if (class(dt6$PO4.hyphen.P)=="factor") dt6$PO4.hyphen.P <-as.numeric(levels(dt6$PO4.hyphen.P))[as.integer(dt6$PO4.hyphen.P) ]               
+if (class(dt6$PO4.hyphen.P)=="character") dt6$PO4.hyphen.P <-as.numeric(dt6$PO4.hyphen.P)
+if (class(dt6$DOC)=="factor") dt6$DOC <-as.numeric(levels(dt6$DOC))[as.integer(dt6$DOC) ]               
+if (class(dt6$DOC)=="character") dt6$DOC <-as.numeric(dt6$DOC)
+if (class(dt6$DIC)=="factor") dt6$DIC <-as.numeric(levels(dt6$DIC))[as.integer(dt6$DIC) ]               
+if (class(dt6$DIC)=="character") dt6$DIC <-as.numeric(dt6$DIC)
+if (class(dt6$TDN)=="factor") dt6$TDN <-as.numeric(levels(dt6$TDN))[as.integer(dt6$TDN) ]               
+if (class(dt6$TDN)=="character") dt6$TDN <-as.numeric(dt6$TDN)
+if (class(dt6$TDP)=="factor") dt6$TDP <-as.numeric(levels(dt6$TDP))[as.integer(dt6$TDP) ]               
+if (class(dt6$TDP)=="character") dt6$TDP <-as.numeric(dt6$TDP)
+if (class(dt6$SiO2)=="factor") dt6$SiO2 <-as.numeric(levels(dt6$SiO2))[as.integer(dt6$SiO2) ]               
+if (class(dt6$SiO2)=="character") dt6$SiO2 <-as.numeric(dt6$SiO2)
+if (class(dt6$DON)=="factor") dt6$DON <-as.numeric(levels(dt6$DON))[as.integer(dt6$DON) ]               
+if (class(dt6$DON)=="character") dt6$DON <-as.numeric(dt6$DON)
+if (class(dt6$TSS)=="factor") dt6$TSS <-as.numeric(levels(dt6$TSS))[as.integer(dt6$TSS) ]               
+if (class(dt6$TSS)=="character") dt6$TSS <-as.numeric(dt6$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt6$Code <- ifelse((trimws(as.character(dt6$Code))==trimws("-9999.00")),NA,dt6$Code)               
+suppressWarnings(dt6$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Code))==as.character(as.numeric("-9999.00"))),NA,dt6$Code))
+dt6$Sample_Time <- ifelse((trimws(as.character(dt6$Sample_Time))==trimws("-9999")),NA,dt6$Sample_Time)               
+suppressWarnings(dt6$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt6$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt6$Sample_Time))
+dt6$Gage_Ht <- ifelse((trimws(as.character(dt6$Gage_Ht))==trimws("-9999.00")),NA,dt6$Gage_Ht)               
+suppressWarnings(dt6$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt6$Gage_Ht))
+dt6$Gage_Ht <- ifelse((trimws(as.character(dt6$Gage_Ht))==trimws("BLANK")),NA,dt6$Gage_Ht)               
+suppressWarnings(dt6$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt6$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt6$Gage_Ht))
+dt6$Temp <- ifelse((trimws(as.character(dt6$Temp))==trimws("-9999.00")),NA,dt6$Temp)               
+suppressWarnings(dt6$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Temp))==as.character(as.numeric("-9999.00"))),NA,dt6$Temp))
+dt6$pH <- ifelse((trimws(as.character(dt6$pH))==trimws("-9999.00")),NA,dt6$pH)               
+suppressWarnings(dt6$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$pH))==as.character(as.numeric("-9999.00"))),NA,dt6$pH))
+dt6$Cond <- ifelse((trimws(as.character(dt6$Cond))==trimws("-9999.00")),NA,dt6$Cond)               
+suppressWarnings(dt6$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Cond))==as.character(as.numeric("-9999.00"))),NA,dt6$Cond))
+dt6$Cl <- ifelse((trimws(as.character(dt6$Cl))==trimws("-9999.00")),NA,dt6$Cl)               
+suppressWarnings(dt6$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Cl))==as.character(as.numeric("-9999.00"))),NA,dt6$Cl))
+dt6$SO4.hyphen.S <- ifelse((trimws(as.character(dt6$SO4.hyphen.S))==trimws("-9999.00")),NA,dt6$SO4.hyphen.S)               
+suppressWarnings(dt6$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt6$SO4.hyphen.S))
+dt6$Na <- ifelse((trimws(as.character(dt6$Na))==trimws("-9999.00")),NA,dt6$Na)               
+suppressWarnings(dt6$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Na))==as.character(as.numeric("-9999.00"))),NA,dt6$Na))
+dt6$K <- ifelse((trimws(as.character(dt6$K))==trimws("-9999.00")),NA,dt6$K)               
+suppressWarnings(dt6$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$K))==as.character(as.numeric("-9999.00"))),NA,dt6$K))
+dt6$Mg <- ifelse((trimws(as.character(dt6$Mg))==trimws("-9999.00")),NA,dt6$Mg)               
+suppressWarnings(dt6$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Mg))==as.character(as.numeric("-9999.00"))),NA,dt6$Mg))
+dt6$Ca <- ifelse((trimws(as.character(dt6$Ca))==trimws("-9999.00")),NA,dt6$Ca)               
+suppressWarnings(dt6$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$Ca))==as.character(as.numeric("-9999.00"))),NA,dt6$Ca))
+dt6$NH4.hyphen.N <- ifelse((trimws(as.character(dt6$NH4.hyphen.N))==trimws("-9999.00")),NA,dt6$NH4.hyphen.N)               
+suppressWarnings(dt6$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt6$NH4.hyphen.N))
+dt6$PO4.hyphen.P <- ifelse((trimws(as.character(dt6$PO4.hyphen.P))==trimws("-9999.00")),NA,dt6$PO4.hyphen.P)               
+suppressWarnings(dt6$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt6$PO4.hyphen.P))
+dt6$DIC <- ifelse((trimws(as.character(dt6$DIC))==trimws("-9999.00")),NA,dt6$DIC)               
+suppressWarnings(dt6$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$DIC))==as.character(as.numeric("-9999.00"))),NA,dt6$DIC))
+dt6$TDN <- ifelse((trimws(as.character(dt6$TDN))==trimws("-9999.00")),NA,dt6$TDN)               
+suppressWarnings(dt6$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$TDN))==as.character(as.numeric("-9999.00"))),NA,dt6$TDN))
+dt6$TDP <- ifelse((trimws(as.character(dt6$TDP))==trimws("-9999.00")),NA,dt6$TDP)               
+suppressWarnings(dt6$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$TDP))==as.character(as.numeric("-9999.00"))),NA,dt6$TDP))
+dt6$SiO2 <- ifelse((trimws(as.character(dt6$SiO2))==trimws("-9999.00")),NA,dt6$SiO2)               
+suppressWarnings(dt6$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt6$SiO2))
+dt6$DON <- ifelse((trimws(as.character(dt6$DON))==trimws("-9999.00")),NA,dt6$DON)               
+suppressWarnings(dt6$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$DON))==as.character(as.numeric("-9999.00"))),NA,dt6$DON))
+dt6$TSS <- ifelse((trimws(as.character(dt6$TSS))==trimws("-9999.00")),NA,dt6$TSS)               
+suppressWarnings(dt6$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt6$TSS))==as.character(as.numeric("-9999.00"))),NA,dt6$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt6)                            
+attach(dt6)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt6$Sample_ID))
+detach(dt6)               
+         
+
+inUrl7  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/317744e66a9ab8f48105d1436e3abfd2" 
+infile7 <- tempfile()
+try(download.file(inUrl7,infile7,method="curl"))
+if (is.na(file.size(infile7))) download.file(inUrl7,infile7,method="auto")
+
+                   
+ dt7 <-read.csv(infile7,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile7)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt7$Sample_ID)!="factor") dt7$Sample_ID<- as.factor(dt7$Sample_ID)
+if (class(dt7$Code)=="factor") dt7$Code <-as.numeric(levels(dt7$Code))[as.integer(dt7$Code) ]               
+if (class(dt7$Code)=="character") dt7$Code <-as.numeric(dt7$Code)                                   
+# attempting to convert dt7$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp7Sample_Date<-as.Date(dt7$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp7Sample_Date) == length(tmp7Sample_Date[!is.na(tmp7Sample_Date)])){dt7$Sample_Date <- tmp7Sample_Date } else {print("Date conversion failed for dt7$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp7Sample_Date) 
+if (class(dt7$Sample_Time)=="factor") dt7$Sample_Time <-as.numeric(levels(dt7$Sample_Time))[as.integer(dt7$Sample_Time) ]               
+if (class(dt7$Sample_Time)=="character") dt7$Sample_Time <-as.numeric(dt7$Sample_Time)
+if (class(dt7$Gage_Ht)=="factor") dt7$Gage_Ht <-as.numeric(levels(dt7$Gage_Ht))[as.integer(dt7$Gage_Ht) ]               
+if (class(dt7$Gage_Ht)=="character") dt7$Gage_Ht <-as.numeric(dt7$Gage_Ht)
+if (class(dt7$Temp)=="factor") dt7$Temp <-as.numeric(levels(dt7$Temp))[as.integer(dt7$Temp) ]               
+if (class(dt7$Temp)=="character") dt7$Temp <-as.numeric(dt7$Temp)
+if (class(dt7$pH)=="factor") dt7$pH <-as.numeric(levels(dt7$pH))[as.integer(dt7$pH) ]               
+if (class(dt7$pH)=="character") dt7$pH <-as.numeric(dt7$pH)
+if (class(dt7$Cond)=="factor") dt7$Cond <-as.numeric(levels(dt7$Cond))[as.integer(dt7$Cond) ]               
+if (class(dt7$Cond)=="character") dt7$Cond <-as.numeric(dt7$Cond)
+if (class(dt7$Cl)=="factor") dt7$Cl <-as.numeric(levels(dt7$Cl))[as.integer(dt7$Cl) ]               
+if (class(dt7$Cl)=="character") dt7$Cl <-as.numeric(dt7$Cl)
+if (class(dt7$NO3.hyphen.N)=="factor") dt7$NO3.hyphen.N <-as.numeric(levels(dt7$NO3.hyphen.N))[as.integer(dt7$NO3.hyphen.N) ]               
+if (class(dt7$NO3.hyphen.N)=="character") dt7$NO3.hyphen.N <-as.numeric(dt7$NO3.hyphen.N)
+if (class(dt7$SO4.hyphen.S)=="factor") dt7$SO4.hyphen.S <-as.numeric(levels(dt7$SO4.hyphen.S))[as.integer(dt7$SO4.hyphen.S) ]               
+if (class(dt7$SO4.hyphen.S)=="character") dt7$SO4.hyphen.S <-as.numeric(dt7$SO4.hyphen.S)
+if (class(dt7$Na)=="factor") dt7$Na <-as.numeric(levels(dt7$Na))[as.integer(dt7$Na) ]               
+if (class(dt7$Na)=="character") dt7$Na <-as.numeric(dt7$Na)
+if (class(dt7$K)=="factor") dt7$K <-as.numeric(levels(dt7$K))[as.integer(dt7$K) ]               
+if (class(dt7$K)=="character") dt7$K <-as.numeric(dt7$K)
+if (class(dt7$Mg)=="factor") dt7$Mg <-as.numeric(levels(dt7$Mg))[as.integer(dt7$Mg) ]               
+if (class(dt7$Mg)=="character") dt7$Mg <-as.numeric(dt7$Mg)
+if (class(dt7$Ca)=="factor") dt7$Ca <-as.numeric(levels(dt7$Ca))[as.integer(dt7$Ca) ]               
+if (class(dt7$Ca)=="character") dt7$Ca <-as.numeric(dt7$Ca)
+if (class(dt7$NH4.hyphen.N)=="factor") dt7$NH4.hyphen.N <-as.numeric(levels(dt7$NH4.hyphen.N))[as.integer(dt7$NH4.hyphen.N) ]               
+if (class(dt7$NH4.hyphen.N)=="character") dt7$NH4.hyphen.N <-as.numeric(dt7$NH4.hyphen.N)
+if (class(dt7$PO4.hyphen.P)=="factor") dt7$PO4.hyphen.P <-as.numeric(levels(dt7$PO4.hyphen.P))[as.integer(dt7$PO4.hyphen.P) ]               
+if (class(dt7$PO4.hyphen.P)=="character") dt7$PO4.hyphen.P <-as.numeric(dt7$PO4.hyphen.P)
+if (class(dt7$DOC)=="factor") dt7$DOC <-as.numeric(levels(dt7$DOC))[as.integer(dt7$DOC) ]               
+if (class(dt7$DOC)=="character") dt7$DOC <-as.numeric(dt7$DOC)
+if (class(dt7$DIC)=="factor") dt7$DIC <-as.numeric(levels(dt7$DIC))[as.integer(dt7$DIC) ]               
+if (class(dt7$DIC)=="character") dt7$DIC <-as.numeric(dt7$DIC)
+if (class(dt7$TDN)=="factor") dt7$TDN <-as.numeric(levels(dt7$TDN))[as.integer(dt7$TDN) ]               
+if (class(dt7$TDN)=="character") dt7$TDN <-as.numeric(dt7$TDN)
+if (class(dt7$TDP)=="factor") dt7$TDP <-as.numeric(levels(dt7$TDP))[as.integer(dt7$TDP) ]               
+if (class(dt7$TDP)=="character") dt7$TDP <-as.numeric(dt7$TDP)
+if (class(dt7$SiO2)=="factor") dt7$SiO2 <-as.numeric(levels(dt7$SiO2))[as.integer(dt7$SiO2) ]               
+if (class(dt7$SiO2)=="character") dt7$SiO2 <-as.numeric(dt7$SiO2)
+if (class(dt7$DON)=="factor") dt7$DON <-as.numeric(levels(dt7$DON))[as.integer(dt7$DON) ]               
+if (class(dt7$DON)=="character") dt7$DON <-as.numeric(dt7$DON)
+if (class(dt7$TSS)=="factor") dt7$TSS <-as.numeric(levels(dt7$TSS))[as.integer(dt7$TSS) ]               
+if (class(dt7$TSS)=="character") dt7$TSS <-as.numeric(dt7$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt7$Code <- ifelse((trimws(as.character(dt7$Code))==trimws("-9999.00")),NA,dt7$Code)               
+suppressWarnings(dt7$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Code))==as.character(as.numeric("-9999.00"))),NA,dt7$Code))
+dt7$Sample_Time <- ifelse((trimws(as.character(dt7$Sample_Time))==trimws("-9999")),NA,dt7$Sample_Time)               
+suppressWarnings(dt7$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt7$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt7$Sample_Time))
+dt7$Gage_Ht <- ifelse((trimws(as.character(dt7$Gage_Ht))==trimws("-9999.00")),NA,dt7$Gage_Ht)               
+suppressWarnings(dt7$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt7$Gage_Ht))
+dt7$Gage_Ht <- ifelse((trimws(as.character(dt7$Gage_Ht))==trimws("BLANK")),NA,dt7$Gage_Ht)               
+suppressWarnings(dt7$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt7$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt7$Gage_Ht))
+dt7$Temp <- ifelse((trimws(as.character(dt7$Temp))==trimws("-9999.00")),NA,dt7$Temp)               
+suppressWarnings(dt7$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Temp))==as.character(as.numeric("-9999.00"))),NA,dt7$Temp))
+dt7$pH <- ifelse((trimws(as.character(dt7$pH))==trimws("-9999.00")),NA,dt7$pH)               
+suppressWarnings(dt7$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$pH))==as.character(as.numeric("-9999.00"))),NA,dt7$pH))
+dt7$Cond <- ifelse((trimws(as.character(dt7$Cond))==trimws("-9999.00")),NA,dt7$Cond)               
+suppressWarnings(dt7$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Cond))==as.character(as.numeric("-9999.00"))),NA,dt7$Cond))
+dt7$Cl <- ifelse((trimws(as.character(dt7$Cl))==trimws("-9999.00")),NA,dt7$Cl)               
+suppressWarnings(dt7$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Cl))==as.character(as.numeric("-9999.00"))),NA,dt7$Cl))
+dt7$SO4.hyphen.S <- ifelse((trimws(as.character(dt7$SO4.hyphen.S))==trimws("-9999.00")),NA,dt7$SO4.hyphen.S)               
+suppressWarnings(dt7$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt7$SO4.hyphen.S))
+dt7$Na <- ifelse((trimws(as.character(dt7$Na))==trimws("-9999.00")),NA,dt7$Na)               
+suppressWarnings(dt7$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Na))==as.character(as.numeric("-9999.00"))),NA,dt7$Na))
+dt7$K <- ifelse((trimws(as.character(dt7$K))==trimws("-9999.00")),NA,dt7$K)               
+suppressWarnings(dt7$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$K))==as.character(as.numeric("-9999.00"))),NA,dt7$K))
+dt7$Mg <- ifelse((trimws(as.character(dt7$Mg))==trimws("-9999.00")),NA,dt7$Mg)               
+suppressWarnings(dt7$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Mg))==as.character(as.numeric("-9999.00"))),NA,dt7$Mg))
+dt7$Ca <- ifelse((trimws(as.character(dt7$Ca))==trimws("-9999.00")),NA,dt7$Ca)               
+suppressWarnings(dt7$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$Ca))==as.character(as.numeric("-9999.00"))),NA,dt7$Ca))
+dt7$NH4.hyphen.N <- ifelse((trimws(as.character(dt7$NH4.hyphen.N))==trimws("-9999.00")),NA,dt7$NH4.hyphen.N)               
+suppressWarnings(dt7$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt7$NH4.hyphen.N))
+dt7$PO4.hyphen.P <- ifelse((trimws(as.character(dt7$PO4.hyphen.P))==trimws("-9999.00")),NA,dt7$PO4.hyphen.P)               
+suppressWarnings(dt7$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt7$PO4.hyphen.P))
+dt7$DIC <- ifelse((trimws(as.character(dt7$DIC))==trimws("-9999.00")),NA,dt7$DIC)               
+suppressWarnings(dt7$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$DIC))==as.character(as.numeric("-9999.00"))),NA,dt7$DIC))
+dt7$TDN <- ifelse((trimws(as.character(dt7$TDN))==trimws("-9999.00")),NA,dt7$TDN)               
+suppressWarnings(dt7$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$TDN))==as.character(as.numeric("-9999.00"))),NA,dt7$TDN))
+dt7$TDP <- ifelse((trimws(as.character(dt7$TDP))==trimws("-9999.00")),NA,dt7$TDP)               
+suppressWarnings(dt7$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$TDP))==as.character(as.numeric("-9999.00"))),NA,dt7$TDP))
+dt7$SiO2 <- ifelse((trimws(as.character(dt7$SiO2))==trimws("-9999.00")),NA,dt7$SiO2)               
+suppressWarnings(dt7$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt7$SiO2))
+dt7$DON <- ifelse((trimws(as.character(dt7$DON))==trimws("-9999.00")),NA,dt7$DON)               
+suppressWarnings(dt7$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$DON))==as.character(as.numeric("-9999.00"))),NA,dt7$DON))
+dt7$TSS <- ifelse((trimws(as.character(dt7$TSS))==trimws("-9999.00")),NA,dt7$TSS)               
+suppressWarnings(dt7$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt7$TSS))==as.character(as.numeric("-9999.00"))),NA,dt7$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt7)                            
+attach(dt7)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt7$Sample_ID))
+detach(dt7)               
+         
+
+inUrl8  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/a05bda0a0af888cc037ff5dd00dafd7e" 
+infile8 <- tempfile()
+try(download.file(inUrl8,infile8,method="curl"))
+if (is.na(file.size(infile8))) download.file(inUrl8,infile8,method="auto")
+
+                   
+ dt8 <-read.csv(infile8,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4.hyphen.N",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DON",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile8)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt8$Sample_ID)!="factor") dt8$Sample_ID<- as.factor(dt8$Sample_ID)
+if (class(dt8$Code)=="factor") dt8$Code <-as.numeric(levels(dt8$Code))[as.integer(dt8$Code) ]               
+if (class(dt8$Code)=="character") dt8$Code <-as.numeric(dt8$Code)                                   
+# attempting to convert dt8$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp8Sample_Date<-as.Date(dt8$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp8Sample_Date) == length(tmp8Sample_Date[!is.na(tmp8Sample_Date)])){dt8$Sample_Date <- tmp8Sample_Date } else {print("Date conversion failed for dt8$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp8Sample_Date) 
+if (class(dt8$Sample_Time)=="factor") dt8$Sample_Time <-as.numeric(levels(dt8$Sample_Time))[as.integer(dt8$Sample_Time) ]               
+if (class(dt8$Sample_Time)=="character") dt8$Sample_Time <-as.numeric(dt8$Sample_Time)
+if (class(dt8$Gage_Ht)=="factor") dt8$Gage_Ht <-as.numeric(levels(dt8$Gage_Ht))[as.integer(dt8$Gage_Ht) ]               
+if (class(dt8$Gage_Ht)=="character") dt8$Gage_Ht <-as.numeric(dt8$Gage_Ht)
+if (class(dt8$Temp)=="factor") dt8$Temp <-as.numeric(levels(dt8$Temp))[as.integer(dt8$Temp) ]               
+if (class(dt8$Temp)=="character") dt8$Temp <-as.numeric(dt8$Temp)
+if (class(dt8$pH)=="factor") dt8$pH <-as.numeric(levels(dt8$pH))[as.integer(dt8$pH) ]               
+if (class(dt8$pH)=="character") dt8$pH <-as.numeric(dt8$pH)
+if (class(dt8$Cond)=="factor") dt8$Cond <-as.numeric(levels(dt8$Cond))[as.integer(dt8$Cond) ]               
+if (class(dt8$Cond)=="character") dt8$Cond <-as.numeric(dt8$Cond)
+if (class(dt8$Cl)=="factor") dt8$Cl <-as.numeric(levels(dt8$Cl))[as.integer(dt8$Cl) ]               
+if (class(dt8$Cl)=="character") dt8$Cl <-as.numeric(dt8$Cl)
+if (class(dt8$NO3.hyphen.N)=="factor") dt8$NO3.hyphen.N <-as.numeric(levels(dt8$NO3.hyphen.N))[as.integer(dt8$NO3.hyphen.N) ]               
+if (class(dt8$NO3.hyphen.N)=="character") dt8$NO3.hyphen.N <-as.numeric(dt8$NO3.hyphen.N)
+if (class(dt8$SO4.hyphen.S)=="factor") dt8$SO4.hyphen.S <-as.numeric(levels(dt8$SO4.hyphen.S))[as.integer(dt8$SO4.hyphen.S) ]               
+if (class(dt8$SO4.hyphen.S)=="character") dt8$SO4.hyphen.S <-as.numeric(dt8$SO4.hyphen.S)
+if (class(dt8$Na)=="factor") dt8$Na <-as.numeric(levels(dt8$Na))[as.integer(dt8$Na) ]               
+if (class(dt8$Na)=="character") dt8$Na <-as.numeric(dt8$Na)
+if (class(dt8$K)=="factor") dt8$K <-as.numeric(levels(dt8$K))[as.integer(dt8$K) ]               
+if (class(dt8$K)=="character") dt8$K <-as.numeric(dt8$K)
+if (class(dt8$Mg)=="factor") dt8$Mg <-as.numeric(levels(dt8$Mg))[as.integer(dt8$Mg) ]               
+if (class(dt8$Mg)=="character") dt8$Mg <-as.numeric(dt8$Mg)
+if (class(dt8$Ca)=="factor") dt8$Ca <-as.numeric(levels(dt8$Ca))[as.integer(dt8$Ca) ]               
+if (class(dt8$Ca)=="character") dt8$Ca <-as.numeric(dt8$Ca)
+if (class(dt8$NH4.hyphen.N)=="factor") dt8$NH4.hyphen.N <-as.numeric(levels(dt8$NH4.hyphen.N))[as.integer(dt8$NH4.hyphen.N) ]               
+if (class(dt8$NH4.hyphen.N)=="character") dt8$NH4.hyphen.N <-as.numeric(dt8$NH4.hyphen.N)
+if (class(dt8$PO4.hyphen.P)=="factor") dt8$PO4.hyphen.P <-as.numeric(levels(dt8$PO4.hyphen.P))[as.integer(dt8$PO4.hyphen.P) ]               
+if (class(dt8$PO4.hyphen.P)=="character") dt8$PO4.hyphen.P <-as.numeric(dt8$PO4.hyphen.P)
+if (class(dt8$DOC)=="factor") dt8$DOC <-as.numeric(levels(dt8$DOC))[as.integer(dt8$DOC) ]               
+if (class(dt8$DOC)=="character") dt8$DOC <-as.numeric(dt8$DOC)
+if (class(dt8$DIC)=="factor") dt8$DIC <-as.numeric(levels(dt8$DIC))[as.integer(dt8$DIC) ]               
+if (class(dt8$DIC)=="character") dt8$DIC <-as.numeric(dt8$DIC)
+if (class(dt8$TDN)=="factor") dt8$TDN <-as.numeric(levels(dt8$TDN))[as.integer(dt8$TDN) ]               
+if (class(dt8$TDN)=="character") dt8$TDN <-as.numeric(dt8$TDN)
+if (class(dt8$TDP)=="factor") dt8$TDP <-as.numeric(levels(dt8$TDP))[as.integer(dt8$TDP) ]               
+if (class(dt8$TDP)=="character") dt8$TDP <-as.numeric(dt8$TDP)
+if (class(dt8$SiO2)=="factor") dt8$SiO2 <-as.numeric(levels(dt8$SiO2))[as.integer(dt8$SiO2) ]               
+if (class(dt8$SiO2)=="character") dt8$SiO2 <-as.numeric(dt8$SiO2)
+if (class(dt8$DON)=="factor") dt8$DON <-as.numeric(levels(dt8$DON))[as.integer(dt8$DON) ]               
+if (class(dt8$DON)=="character") dt8$DON <-as.numeric(dt8$DON)
+if (class(dt8$TSS)=="factor") dt8$TSS <-as.numeric(levels(dt8$TSS))[as.integer(dt8$TSS) ]               
+if (class(dt8$TSS)=="character") dt8$TSS <-as.numeric(dt8$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt8$Code <- ifelse((trimws(as.character(dt8$Code))==trimws("-9999.00")),NA,dt8$Code)               
+suppressWarnings(dt8$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Code))==as.character(as.numeric("-9999.00"))),NA,dt8$Code))
+dt8$Sample_Time <- ifelse((trimws(as.character(dt8$Sample_Time))==trimws("-9999")),NA,dt8$Sample_Time)               
+suppressWarnings(dt8$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt8$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt8$Sample_Time))
+dt8$Gage_Ht <- ifelse((trimws(as.character(dt8$Gage_Ht))==trimws("-9999.00")),NA,dt8$Gage_Ht)               
+suppressWarnings(dt8$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt8$Gage_Ht))
+dt8$Gage_Ht <- ifelse((trimws(as.character(dt8$Gage_Ht))==trimws("BLANK")),NA,dt8$Gage_Ht)               
+suppressWarnings(dt8$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt8$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt8$Gage_Ht))
+dt8$Temp <- ifelse((trimws(as.character(dt8$Temp))==trimws("-9999.00")),NA,dt8$Temp)               
+suppressWarnings(dt8$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Temp))==as.character(as.numeric("-9999.00"))),NA,dt8$Temp))
+dt8$pH <- ifelse((trimws(as.character(dt8$pH))==trimws("-9999.00")),NA,dt8$pH)               
+suppressWarnings(dt8$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$pH))==as.character(as.numeric("-9999.00"))),NA,dt8$pH))
+dt8$Cond <- ifelse((trimws(as.character(dt8$Cond))==trimws("-9999.00")),NA,dt8$Cond)               
+suppressWarnings(dt8$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Cond))==as.character(as.numeric("-9999.00"))),NA,dt8$Cond))
+dt8$Cl <- ifelse((trimws(as.character(dt8$Cl))==trimws("-9999.00")),NA,dt8$Cl)               
+suppressWarnings(dt8$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Cl))==as.character(as.numeric("-9999.00"))),NA,dt8$Cl))
+dt8$SO4.hyphen.S <- ifelse((trimws(as.character(dt8$SO4.hyphen.S))==trimws("-9999.00")),NA,dt8$SO4.hyphen.S)               
+suppressWarnings(dt8$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt8$SO4.hyphen.S))
+dt8$Na <- ifelse((trimws(as.character(dt8$Na))==trimws("-9999.00")),NA,dt8$Na)               
+suppressWarnings(dt8$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Na))==as.character(as.numeric("-9999.00"))),NA,dt8$Na))
+dt8$K <- ifelse((trimws(as.character(dt8$K))==trimws("-9999.00")),NA,dt8$K)               
+suppressWarnings(dt8$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$K))==as.character(as.numeric("-9999.00"))),NA,dt8$K))
+dt8$Mg <- ifelse((trimws(as.character(dt8$Mg))==trimws("-9999.00")),NA,dt8$Mg)               
+suppressWarnings(dt8$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Mg))==as.character(as.numeric("-9999.00"))),NA,dt8$Mg))
+dt8$Ca <- ifelse((trimws(as.character(dt8$Ca))==trimws("-9999.00")),NA,dt8$Ca)               
+suppressWarnings(dt8$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$Ca))==as.character(as.numeric("-9999.00"))),NA,dt8$Ca))
+dt8$NH4.hyphen.N <- ifelse((trimws(as.character(dt8$NH4.hyphen.N))==trimws("-9999.00")),NA,dt8$NH4.hyphen.N)               
+suppressWarnings(dt8$NH4.hyphen.N <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$NH4.hyphen.N))==as.character(as.numeric("-9999.00"))),NA,dt8$NH4.hyphen.N))
+dt8$PO4.hyphen.P <- ifelse((trimws(as.character(dt8$PO4.hyphen.P))==trimws("-9999.00")),NA,dt8$PO4.hyphen.P)               
+suppressWarnings(dt8$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt8$PO4.hyphen.P))
+dt8$DIC <- ifelse((trimws(as.character(dt8$DIC))==trimws("-9999.00")),NA,dt8$DIC)               
+suppressWarnings(dt8$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$DIC))==as.character(as.numeric("-9999.00"))),NA,dt8$DIC))
+dt8$TDN <- ifelse((trimws(as.character(dt8$TDN))==trimws("-9999.00")),NA,dt8$TDN)               
+suppressWarnings(dt8$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$TDN))==as.character(as.numeric("-9999.00"))),NA,dt8$TDN))
+dt8$TDP <- ifelse((trimws(as.character(dt8$TDP))==trimws("-9999.00")),NA,dt8$TDP)               
+suppressWarnings(dt8$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$TDP))==as.character(as.numeric("-9999.00"))),NA,dt8$TDP))
+dt8$SiO2 <- ifelse((trimws(as.character(dt8$SiO2))==trimws("-9999.00")),NA,dt8$SiO2)               
+suppressWarnings(dt8$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt8$SiO2))
+dt8$DON <- ifelse((trimws(as.character(dt8$DON))==trimws("-9999.00")),NA,dt8$DON)               
+suppressWarnings(dt8$DON <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$DON))==as.character(as.numeric("-9999.00"))),NA,dt8$DON))
+dt8$TSS <- ifelse((trimws(as.character(dt8$TSS))==trimws("-9999.00")),NA,dt8$TSS)               
+suppressWarnings(dt8$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt8$TSS))==as.character(as.numeric("-9999.00"))),NA,dt8$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt8)                            
+attach(dt8)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4.hyphen.N)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DON)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt8$Sample_ID))
+detach(dt8)               
+         
+
+inUrl9  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/63abce9a59872a9bc0e55a1b52653fc1" 
+infile9 <- tempfile()
+try(download.file(inUrl9,infile9,method="curl"))
+if (is.na(file.size(infile9))) download.file(inUrl9,infile9,method="auto")
+
+                   
+ dt9 <-read.csv(infile9,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage..paren.in.feet.paren.",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DOC",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile9)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt9$Sample_ID)!="factor") dt9$Sample_ID<- as.factor(dt9$Sample_ID)
+if (class(dt9$Code)=="factor") dt9$Code <-as.numeric(levels(dt9$Code))[as.integer(dt9$Code) ]               
+if (class(dt9$Code)=="character") dt9$Code <-as.numeric(dt9$Code)                                   
+# attempting to convert dt9$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp9Sample_Date<-as.Date(dt9$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp9Sample_Date) == length(tmp9Sample_Date[!is.na(tmp9Sample_Date)])){dt9$Sample_Date <- tmp9Sample_Date } else {print("Date conversion failed for dt9$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp9Sample_Date) 
+if (class(dt9$Sample_Time)=="factor") dt9$Sample_Time <-as.numeric(levels(dt9$Sample_Time))[as.integer(dt9$Sample_Time) ]               
+if (class(dt9$Sample_Time)=="character") dt9$Sample_Time <-as.numeric(dt9$Sample_Time)
+if (class(dt9$Gage..paren.in.feet.paren.)=="factor") dt9$Gage..paren.in.feet.paren. <-as.numeric(levels(dt9$Gage..paren.in.feet.paren.))[as.integer(dt9$Gage..paren.in.feet.paren.) ]               
+if (class(dt9$Gage..paren.in.feet.paren.)=="character") dt9$Gage..paren.in.feet.paren. <-as.numeric(dt9$Gage..paren.in.feet.paren.)
+if (class(dt9$Temp)=="factor") dt9$Temp <-as.numeric(levels(dt9$Temp))[as.integer(dt9$Temp) ]               
+if (class(dt9$Temp)=="character") dt9$Temp <-as.numeric(dt9$Temp)
+if (class(dt9$pH)=="factor") dt9$pH <-as.numeric(levels(dt9$pH))[as.integer(dt9$pH) ]               
+if (class(dt9$pH)=="character") dt9$pH <-as.numeric(dt9$pH)
+if (class(dt9$Cond)=="factor") dt9$Cond <-as.numeric(levels(dt9$Cond))[as.integer(dt9$Cond) ]               
+if (class(dt9$Cond)=="character") dt9$Cond <-as.numeric(dt9$Cond)
+if (class(dt9$Cl)=="factor") dt9$Cl <-as.numeric(levels(dt9$Cl))[as.integer(dt9$Cl) ]               
+if (class(dt9$Cl)=="character") dt9$Cl <-as.numeric(dt9$Cl)
+if (class(dt9$NO3.hyphen.N)=="factor") dt9$NO3.hyphen.N <-as.numeric(levels(dt9$NO3.hyphen.N))[as.integer(dt9$NO3.hyphen.N) ]               
+if (class(dt9$NO3.hyphen.N)=="character") dt9$NO3.hyphen.N <-as.numeric(dt9$NO3.hyphen.N)
+if (class(dt9$SO4.hyphen.S)=="factor") dt9$SO4.hyphen.S <-as.numeric(levels(dt9$SO4.hyphen.S))[as.integer(dt9$SO4.hyphen.S) ]               
+if (class(dt9$SO4.hyphen.S)=="character") dt9$SO4.hyphen.S <-as.numeric(dt9$SO4.hyphen.S)
+if (class(dt9$Na)=="factor") dt9$Na <-as.numeric(levels(dt9$Na))[as.integer(dt9$Na) ]               
+if (class(dt9$Na)=="character") dt9$Na <-as.numeric(dt9$Na)
+if (class(dt9$K)=="factor") dt9$K <-as.numeric(levels(dt9$K))[as.integer(dt9$K) ]               
+if (class(dt9$K)=="character") dt9$K <-as.numeric(dt9$K)
+if (class(dt9$Mg)=="factor") dt9$Mg <-as.numeric(levels(dt9$Mg))[as.integer(dt9$Mg) ]               
+if (class(dt9$Mg)=="character") dt9$Mg <-as.numeric(dt9$Mg)
+if (class(dt9$Ca)=="factor") dt9$Ca <-as.numeric(levels(dt9$Ca))[as.integer(dt9$Ca) ]               
+if (class(dt9$Ca)=="character") dt9$Ca <-as.numeric(dt9$Ca)
+if (class(dt9$NH4)=="factor") dt9$NH4 <-as.numeric(levels(dt9$NH4))[as.integer(dt9$NH4) ]               
+if (class(dt9$NH4)=="character") dt9$NH4 <-as.numeric(dt9$NH4)
+if (class(dt9$PO4.hyphen.P)=="factor") dt9$PO4.hyphen.P <-as.numeric(levels(dt9$PO4.hyphen.P))[as.integer(dt9$PO4.hyphen.P) ]               
+if (class(dt9$PO4.hyphen.P)=="character") dt9$PO4.hyphen.P <-as.numeric(dt9$PO4.hyphen.P)
+if (class(dt9$DOC)=="factor") dt9$DOC <-as.numeric(levels(dt9$DOC))[as.integer(dt9$DOC) ]               
+if (class(dt9$DOC)=="character") dt9$DOC <-as.numeric(dt9$DOC)
+if (class(dt9$DIC)=="factor") dt9$DIC <-as.numeric(levels(dt9$DIC))[as.integer(dt9$DIC) ]               
+if (class(dt9$DIC)=="character") dt9$DIC <-as.numeric(dt9$DIC)
+if (class(dt9$TDN)=="factor") dt9$TDN <-as.numeric(levels(dt9$TDN))[as.integer(dt9$TDN) ]               
+if (class(dt9$TDN)=="character") dt9$TDN <-as.numeric(dt9$TDN)
+if (class(dt9$TDP)=="factor") dt9$TDP <-as.numeric(levels(dt9$TDP))[as.integer(dt9$TDP) ]               
+if (class(dt9$TDP)=="character") dt9$TDP <-as.numeric(dt9$TDP)
+if (class(dt9$SiO2)=="factor") dt9$SiO2 <-as.numeric(levels(dt9$SiO2))[as.integer(dt9$SiO2) ]               
+if (class(dt9$SiO2)=="character") dt9$SiO2 <-as.numeric(dt9$SiO2)
+if (class(dt9$DOC)=="factor") dt9$DOC <-as.numeric(levels(dt9$DOC))[as.integer(dt9$DOC) ]               
+if (class(dt9$DOC)=="character") dt9$DOC <-as.numeric(dt9$DOC)
+if (class(dt9$TSS)=="factor") dt9$TSS <-as.numeric(levels(dt9$TSS))[as.integer(dt9$TSS) ]               
+if (class(dt9$TSS)=="character") dt9$TSS <-as.numeric(dt9$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt9$Code <- ifelse((trimws(as.character(dt9$Code))==trimws("-9999.00")),NA,dt9$Code)               
+suppressWarnings(dt9$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Code))==as.character(as.numeric("-9999.00"))),NA,dt9$Code))
+dt9$Sample_Time <- ifelse((trimws(as.character(dt9$Sample_Time))==trimws("-9999")),NA,dt9$Sample_Time)               
+suppressWarnings(dt9$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt9$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt9$Sample_Time))
+dt9$Gage..paren.in.feet.paren. <- ifelse((trimws(as.character(dt9$Gage..paren.in.feet.paren.))==trimws("blank")),NA,dt9$Gage..paren.in.feet.paren.)               
+suppressWarnings(dt9$Gage..paren.in.feet.paren. <- ifelse(!is.na(as.numeric("blank")) & (trimws(as.character(dt9$Gage..paren.in.feet.paren.))==as.character(as.numeric("blank"))),NA,dt9$Gage..paren.in.feet.paren.))
+dt9$Temp <- ifelse((trimws(as.character(dt9$Temp))==trimws("-9999.00")),NA,dt9$Temp)               
+suppressWarnings(dt9$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Temp))==as.character(as.numeric("-9999.00"))),NA,dt9$Temp))
+dt9$pH <- ifelse((trimws(as.character(dt9$pH))==trimws("BLANK")),NA,dt9$pH)               
+suppressWarnings(dt9$pH <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt9$pH))==as.character(as.numeric("BLANK"))),NA,dt9$pH))
+dt9$Cond <- ifelse((trimws(as.character(dt9$Cond))==trimws("-9999.00")),NA,dt9$Cond)               
+suppressWarnings(dt9$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Cond))==as.character(as.numeric("-9999.00"))),NA,dt9$Cond))
+dt9$Cl <- ifelse((trimws(as.character(dt9$Cl))==trimws("-9999.00")),NA,dt9$Cl)               
+suppressWarnings(dt9$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Cl))==as.character(as.numeric("-9999.00"))),NA,dt9$Cl))
+dt9$SO4.hyphen.S <- ifelse((trimws(as.character(dt9$SO4.hyphen.S))==trimws("-9999.00")),NA,dt9$SO4.hyphen.S)               
+suppressWarnings(dt9$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt9$SO4.hyphen.S))
+dt9$Na <- ifelse((trimws(as.character(dt9$Na))==trimws("-9999.00")),NA,dt9$Na)               
+suppressWarnings(dt9$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Na))==as.character(as.numeric("-9999.00"))),NA,dt9$Na))
+dt9$K <- ifelse((trimws(as.character(dt9$K))==trimws("-9999.00")),NA,dt9$K)               
+suppressWarnings(dt9$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$K))==as.character(as.numeric("-9999.00"))),NA,dt9$K))
+dt9$Mg <- ifelse((trimws(as.character(dt9$Mg))==trimws("-9999.00")),NA,dt9$Mg)               
+suppressWarnings(dt9$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Mg))==as.character(as.numeric("-9999.00"))),NA,dt9$Mg))
+dt9$Ca <- ifelse((trimws(as.character(dt9$Ca))==trimws("-9999.00")),NA,dt9$Ca)               
+suppressWarnings(dt9$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$Ca))==as.character(as.numeric("-9999.00"))),NA,dt9$Ca))
+dt9$NH4 <- ifelse((trimws(as.character(dt9$NH4))==trimws("none")),NA,dt9$NH4)               
+suppressWarnings(dt9$NH4 <- ifelse(!is.na(as.numeric("none")) & (trimws(as.character(dt9$NH4))==as.character(as.numeric("none"))),NA,dt9$NH4))
+dt9$PO4.hyphen.P <- ifelse((trimws(as.character(dt9$PO4.hyphen.P))==trimws("-9999.00")),NA,dt9$PO4.hyphen.P)               
+suppressWarnings(dt9$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt9$PO4.hyphen.P))
+dt9$DIC <- ifelse((trimws(as.character(dt9$DIC))==trimws("-9999.00")),NA,dt9$DIC)               
+suppressWarnings(dt9$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$DIC))==as.character(as.numeric("-9999.00"))),NA,dt9$DIC))
+dt9$TDN <- ifelse((trimws(as.character(dt9$TDN))==trimws("-9999.00")),NA,dt9$TDN)               
+suppressWarnings(dt9$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$TDN))==as.character(as.numeric("-9999.00"))),NA,dt9$TDN))
+dt9$TDP <- ifelse((trimws(as.character(dt9$TDP))==trimws("-9999.00")),NA,dt9$TDP)               
+suppressWarnings(dt9$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$TDP))==as.character(as.numeric("-9999.00"))),NA,dt9$TDP))
+dt9$SiO2 <- ifelse((trimws(as.character(dt9$SiO2))==trimws("-9999.00")),NA,dt9$SiO2)               
+suppressWarnings(dt9$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt9$SiO2))
+dt9$TSS <- ifelse((trimws(as.character(dt9$TSS))==trimws("-9999.00")),NA,dt9$TSS)               
+suppressWarnings(dt9$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt9$TSS))==as.character(as.numeric("-9999.00"))),NA,dt9$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt9)                            
+attach(dt9)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage..paren.in.feet.paren.)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DOC)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt9$Sample_ID))
+detach(dt9)               
+         
+
+inUrl10  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/2cb48616b931ea4e821648759e9808f0" 
+infile10 <- tempfile()
+try(download.file(inUrl10,infile10,method="curl"))
+if (is.na(file.size(infile10))) download.file(inUrl10,infile10,method="auto")
+
+                   
+ dt10 <-read.csv(infile10,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage..paren.in.feet.paren.",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DOC",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile10)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt10$Sample_ID)!="factor") dt10$Sample_ID<- as.factor(dt10$Sample_ID)
+if (class(dt10$Code)=="factor") dt10$Code <-as.numeric(levels(dt10$Code))[as.integer(dt10$Code) ]               
+if (class(dt10$Code)=="character") dt10$Code <-as.numeric(dt10$Code)                                   
+# attempting to convert dt10$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp10Sample_Date<-as.Date(dt10$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp10Sample_Date) == length(tmp10Sample_Date[!is.na(tmp10Sample_Date)])){dt10$Sample_Date <- tmp10Sample_Date } else {print("Date conversion failed for dt10$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp10Sample_Date) 
+if (class(dt10$Sample_Time)=="factor") dt10$Sample_Time <-as.numeric(levels(dt10$Sample_Time))[as.integer(dt10$Sample_Time) ]               
+if (class(dt10$Sample_Time)=="character") dt10$Sample_Time <-as.numeric(dt10$Sample_Time)
+if (class(dt10$Gage..paren.in.feet.paren.)=="factor") dt10$Gage..paren.in.feet.paren. <-as.numeric(levels(dt10$Gage..paren.in.feet.paren.))[as.integer(dt10$Gage..paren.in.feet.paren.) ]               
+if (class(dt10$Gage..paren.in.feet.paren.)=="character") dt10$Gage..paren.in.feet.paren. <-as.numeric(dt10$Gage..paren.in.feet.paren.)
+if (class(dt10$Temp)=="factor") dt10$Temp <-as.numeric(levels(dt10$Temp))[as.integer(dt10$Temp) ]               
+if (class(dt10$Temp)=="character") dt10$Temp <-as.numeric(dt10$Temp)
+if (class(dt10$pH)=="factor") dt10$pH <-as.numeric(levels(dt10$pH))[as.integer(dt10$pH) ]               
+if (class(dt10$pH)=="character") dt10$pH <-as.numeric(dt10$pH)
+if (class(dt10$Cond)=="factor") dt10$Cond <-as.numeric(levels(dt10$Cond))[as.integer(dt10$Cond) ]               
+if (class(dt10$Cond)=="character") dt10$Cond <-as.numeric(dt10$Cond)
+if (class(dt10$Cl)=="factor") dt10$Cl <-as.numeric(levels(dt10$Cl))[as.integer(dt10$Cl) ]               
+if (class(dt10$Cl)=="character") dt10$Cl <-as.numeric(dt10$Cl)
+if (class(dt10$NO3.hyphen.N)=="factor") dt10$NO3.hyphen.N <-as.numeric(levels(dt10$NO3.hyphen.N))[as.integer(dt10$NO3.hyphen.N) ]               
+if (class(dt10$NO3.hyphen.N)=="character") dt10$NO3.hyphen.N <-as.numeric(dt10$NO3.hyphen.N)
+if (class(dt10$SO4.hyphen.S)=="factor") dt10$SO4.hyphen.S <-as.numeric(levels(dt10$SO4.hyphen.S))[as.integer(dt10$SO4.hyphen.S) ]               
+if (class(dt10$SO4.hyphen.S)=="character") dt10$SO4.hyphen.S <-as.numeric(dt10$SO4.hyphen.S)
+if (class(dt10$Na)=="factor") dt10$Na <-as.numeric(levels(dt10$Na))[as.integer(dt10$Na) ]               
+if (class(dt10$Na)=="character") dt10$Na <-as.numeric(dt10$Na)
+if (class(dt10$K)=="factor") dt10$K <-as.numeric(levels(dt10$K))[as.integer(dt10$K) ]               
+if (class(dt10$K)=="character") dt10$K <-as.numeric(dt10$K)
+if (class(dt10$Mg)=="factor") dt10$Mg <-as.numeric(levels(dt10$Mg))[as.integer(dt10$Mg) ]               
+if (class(dt10$Mg)=="character") dt10$Mg <-as.numeric(dt10$Mg)
+if (class(dt10$Ca)=="factor") dt10$Ca <-as.numeric(levels(dt10$Ca))[as.integer(dt10$Ca) ]               
+if (class(dt10$Ca)=="character") dt10$Ca <-as.numeric(dt10$Ca)
+if (class(dt10$NH4)=="factor") dt10$NH4 <-as.numeric(levels(dt10$NH4))[as.integer(dt10$NH4) ]               
+if (class(dt10$NH4)=="character") dt10$NH4 <-as.numeric(dt10$NH4)
+if (class(dt10$PO4.hyphen.P)=="factor") dt10$PO4.hyphen.P <-as.numeric(levels(dt10$PO4.hyphen.P))[as.integer(dt10$PO4.hyphen.P) ]               
+if (class(dt10$PO4.hyphen.P)=="character") dt10$PO4.hyphen.P <-as.numeric(dt10$PO4.hyphen.P)
+if (class(dt10$DOC)=="factor") dt10$DOC <-as.numeric(levels(dt10$DOC))[as.integer(dt10$DOC) ]               
+if (class(dt10$DOC)=="character") dt10$DOC <-as.numeric(dt10$DOC)
+if (class(dt10$DIC)=="factor") dt10$DIC <-as.numeric(levels(dt10$DIC))[as.integer(dt10$DIC) ]               
+if (class(dt10$DIC)=="character") dt10$DIC <-as.numeric(dt10$DIC)
+if (class(dt10$TDN)=="factor") dt10$TDN <-as.numeric(levels(dt10$TDN))[as.integer(dt10$TDN) ]               
+if (class(dt10$TDN)=="character") dt10$TDN <-as.numeric(dt10$TDN)
+if (class(dt10$TDP)=="factor") dt10$TDP <-as.numeric(levels(dt10$TDP))[as.integer(dt10$TDP) ]               
+if (class(dt10$TDP)=="character") dt10$TDP <-as.numeric(dt10$TDP)
+if (class(dt10$SiO2)=="factor") dt10$SiO2 <-as.numeric(levels(dt10$SiO2))[as.integer(dt10$SiO2) ]               
+if (class(dt10$SiO2)=="character") dt10$SiO2 <-as.numeric(dt10$SiO2)
+if (class(dt10$DOC)=="factor") dt10$DOC <-as.numeric(levels(dt10$DOC))[as.integer(dt10$DOC) ]               
+if (class(dt10$DOC)=="character") dt10$DOC <-as.numeric(dt10$DOC)
+if (class(dt10$TSS)=="factor") dt10$TSS <-as.numeric(levels(dt10$TSS))[as.integer(dt10$TSS) ]               
+if (class(dt10$TSS)=="character") dt10$TSS <-as.numeric(dt10$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt10$Code <- ifelse((trimws(as.character(dt10$Code))==trimws("-9999.00")),NA,dt10$Code)               
+suppressWarnings(dt10$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Code))==as.character(as.numeric("-9999.00"))),NA,dt10$Code))
+dt10$Sample_Time <- ifelse((trimws(as.character(dt10$Sample_Time))==trimws("-9999")),NA,dt10$Sample_Time)               
+suppressWarnings(dt10$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt10$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt10$Sample_Time))
+dt10$Gage..paren.in.feet.paren. <- ifelse((trimws(as.character(dt10$Gage..paren.in.feet.paren.))==trimws("blank")),NA,dt10$Gage..paren.in.feet.paren.)               
+suppressWarnings(dt10$Gage..paren.in.feet.paren. <- ifelse(!is.na(as.numeric("blank")) & (trimws(as.character(dt10$Gage..paren.in.feet.paren.))==as.character(as.numeric("blank"))),NA,dt10$Gage..paren.in.feet.paren.))
+dt10$Temp <- ifelse((trimws(as.character(dt10$Temp))==trimws("-9999.00")),NA,dt10$Temp)               
+suppressWarnings(dt10$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Temp))==as.character(as.numeric("-9999.00"))),NA,dt10$Temp))
+dt10$pH <- ifelse((trimws(as.character(dt10$pH))==trimws("BLANK")),NA,dt10$pH)               
+suppressWarnings(dt10$pH <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt10$pH))==as.character(as.numeric("BLANK"))),NA,dt10$pH))
+dt10$Cond <- ifelse((trimws(as.character(dt10$Cond))==trimws("-9999.00")),NA,dt10$Cond)               
+suppressWarnings(dt10$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Cond))==as.character(as.numeric("-9999.00"))),NA,dt10$Cond))
+dt10$Cl <- ifelse((trimws(as.character(dt10$Cl))==trimws("-9999.00")),NA,dt10$Cl)               
+suppressWarnings(dt10$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Cl))==as.character(as.numeric("-9999.00"))),NA,dt10$Cl))
+dt10$SO4.hyphen.S <- ifelse((trimws(as.character(dt10$SO4.hyphen.S))==trimws("-9999.00")),NA,dt10$SO4.hyphen.S)               
+suppressWarnings(dt10$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt10$SO4.hyphen.S))
+dt10$Na <- ifelse((trimws(as.character(dt10$Na))==trimws("-9999.00")),NA,dt10$Na)               
+suppressWarnings(dt10$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Na))==as.character(as.numeric("-9999.00"))),NA,dt10$Na))
+dt10$K <- ifelse((trimws(as.character(dt10$K))==trimws("-9999.00")),NA,dt10$K)               
+suppressWarnings(dt10$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$K))==as.character(as.numeric("-9999.00"))),NA,dt10$K))
+dt10$Mg <- ifelse((trimws(as.character(dt10$Mg))==trimws("-9999.00")),NA,dt10$Mg)               
+suppressWarnings(dt10$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Mg))==as.character(as.numeric("-9999.00"))),NA,dt10$Mg))
+dt10$Ca <- ifelse((trimws(as.character(dt10$Ca))==trimws("-9999.00")),NA,dt10$Ca)               
+suppressWarnings(dt10$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$Ca))==as.character(as.numeric("-9999.00"))),NA,dt10$Ca))
+dt10$NH4 <- ifelse((trimws(as.character(dt10$NH4))==trimws("none")),NA,dt10$NH4)               
+suppressWarnings(dt10$NH4 <- ifelse(!is.na(as.numeric("none")) & (trimws(as.character(dt10$NH4))==as.character(as.numeric("none"))),NA,dt10$NH4))
+dt10$PO4.hyphen.P <- ifelse((trimws(as.character(dt10$PO4.hyphen.P))==trimws("-9999.00")),NA,dt10$PO4.hyphen.P)               
+suppressWarnings(dt10$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt10$PO4.hyphen.P))
+dt10$DIC <- ifelse((trimws(as.character(dt10$DIC))==trimws("-9999.00")),NA,dt10$DIC)               
+suppressWarnings(dt10$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$DIC))==as.character(as.numeric("-9999.00"))),NA,dt10$DIC))
+dt10$TDN <- ifelse((trimws(as.character(dt10$TDN))==trimws("-9999.00")),NA,dt10$TDN)               
+suppressWarnings(dt10$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$TDN))==as.character(as.numeric("-9999.00"))),NA,dt10$TDN))
+dt10$TDP <- ifelse((trimws(as.character(dt10$TDP))==trimws("-9999.00")),NA,dt10$TDP)               
+suppressWarnings(dt10$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$TDP))==as.character(as.numeric("-9999.00"))),NA,dt10$TDP))
+dt10$SiO2 <- ifelse((trimws(as.character(dt10$SiO2))==trimws("-9999.00")),NA,dt10$SiO2)               
+suppressWarnings(dt10$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt10$SiO2))
+dt10$TSS <- ifelse((trimws(as.character(dt10$TSS))==trimws("-9999.00")),NA,dt10$TSS)               
+suppressWarnings(dt10$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt10$TSS))==as.character(as.numeric("-9999.00"))),NA,dt10$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt10)                            
+attach(dt10)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage..paren.in.feet.paren.)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DOC)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt10$Sample_ID))
+detach(dt10)               
+         
+
+inUrl11  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/acb18d969cf36e7efda2604a1449e816" 
+infile11 <- tempfile()
+try(download.file(inUrl11,infile11,method="curl"))
+if (is.na(file.size(infile11))) download.file(inUrl11,infile11,method="auto")
+
+                   
+ dt11 <-read.csv(infile11,header=F 
+          ,skip=5
+            ,sep=","  
+        , col.names=c(
+                    "Sample_ID",     
+                    "Code",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage..paren.in.feet.paren.",     
+                    "Temp",     
+                    "pH",     
+                    "Cond",     
+                    "Cl",     
+                    "NO3.hyphen.N",     
+                    "SO4.hyphen.S",     
+                    "Na",     
+                    "K",     
+                    "Mg",     
+                    "Ca",     
+                    "NH4",     
+                    "PO4.hyphen.P",     
+                    "DOC",     
+                    "DIC",     
+                    "TDN",     
+                    "TDP",     
+                    "SiO2",     
+                    "DOC",     
+                    "TSS"    ), check.names=TRUE)
+               
+unlink(infile11)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt11$Sample_ID)!="factor") dt11$Sample_ID<- as.factor(dt11$Sample_ID)
+if (class(dt11$Code)=="factor") dt11$Code <-as.numeric(levels(dt11$Code))[as.integer(dt11$Code) ]               
+if (class(dt11$Code)=="character") dt11$Code <-as.numeric(dt11$Code)                                   
+# attempting to convert dt11$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp11Sample_Date<-as.Date(dt11$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp11Sample_Date) == length(tmp11Sample_Date[!is.na(tmp11Sample_Date)])){dt11$Sample_Date <- tmp11Sample_Date } else {print("Date conversion failed for dt11$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp11Sample_Date) 
+if (class(dt11$Sample_Time)=="factor") dt11$Sample_Time <-as.numeric(levels(dt11$Sample_Time))[as.integer(dt11$Sample_Time) ]               
+if (class(dt11$Sample_Time)=="character") dt11$Sample_Time <-as.numeric(dt11$Sample_Time)
+if (class(dt11$Gage..paren.in.feet.paren.)=="factor") dt11$Gage..paren.in.feet.paren. <-as.numeric(levels(dt11$Gage..paren.in.feet.paren.))[as.integer(dt11$Gage..paren.in.feet.paren.) ]               
+if (class(dt11$Gage..paren.in.feet.paren.)=="character") dt11$Gage..paren.in.feet.paren. <-as.numeric(dt11$Gage..paren.in.feet.paren.)
+if (class(dt11$Temp)=="factor") dt11$Temp <-as.numeric(levels(dt11$Temp))[as.integer(dt11$Temp) ]               
+if (class(dt11$Temp)=="character") dt11$Temp <-as.numeric(dt11$Temp)
+if (class(dt11$pH)=="factor") dt11$pH <-as.numeric(levels(dt11$pH))[as.integer(dt11$pH) ]               
+if (class(dt11$pH)=="character") dt11$pH <-as.numeric(dt11$pH)
+if (class(dt11$Cond)=="factor") dt11$Cond <-as.numeric(levels(dt11$Cond))[as.integer(dt11$Cond) ]               
+if (class(dt11$Cond)=="character") dt11$Cond <-as.numeric(dt11$Cond)
+if (class(dt11$Cl)=="factor") dt11$Cl <-as.numeric(levels(dt11$Cl))[as.integer(dt11$Cl) ]               
+if (class(dt11$Cl)=="character") dt11$Cl <-as.numeric(dt11$Cl)
+if (class(dt11$NO3.hyphen.N)=="factor") dt11$NO3.hyphen.N <-as.numeric(levels(dt11$NO3.hyphen.N))[as.integer(dt11$NO3.hyphen.N) ]               
+if (class(dt11$NO3.hyphen.N)=="character") dt11$NO3.hyphen.N <-as.numeric(dt11$NO3.hyphen.N)
+if (class(dt11$SO4.hyphen.S)=="factor") dt11$SO4.hyphen.S <-as.numeric(levels(dt11$SO4.hyphen.S))[as.integer(dt11$SO4.hyphen.S) ]               
+if (class(dt11$SO4.hyphen.S)=="character") dt11$SO4.hyphen.S <-as.numeric(dt11$SO4.hyphen.S)
+if (class(dt11$Na)=="factor") dt11$Na <-as.numeric(levels(dt11$Na))[as.integer(dt11$Na) ]               
+if (class(dt11$Na)=="character") dt11$Na <-as.numeric(dt11$Na)
+if (class(dt11$K)=="factor") dt11$K <-as.numeric(levels(dt11$K))[as.integer(dt11$K) ]               
+if (class(dt11$K)=="character") dt11$K <-as.numeric(dt11$K)
+if (class(dt11$Mg)=="factor") dt11$Mg <-as.numeric(levels(dt11$Mg))[as.integer(dt11$Mg) ]               
+if (class(dt11$Mg)=="character") dt11$Mg <-as.numeric(dt11$Mg)
+if (class(dt11$Ca)=="factor") dt11$Ca <-as.numeric(levels(dt11$Ca))[as.integer(dt11$Ca) ]               
+if (class(dt11$Ca)=="character") dt11$Ca <-as.numeric(dt11$Ca)
+if (class(dt11$NH4)=="factor") dt11$NH4 <-as.numeric(levels(dt11$NH4))[as.integer(dt11$NH4) ]               
+if (class(dt11$NH4)=="character") dt11$NH4 <-as.numeric(dt11$NH4)
+if (class(dt11$PO4.hyphen.P)=="factor") dt11$PO4.hyphen.P <-as.numeric(levels(dt11$PO4.hyphen.P))[as.integer(dt11$PO4.hyphen.P) ]               
+if (class(dt11$PO4.hyphen.P)=="character") dt11$PO4.hyphen.P <-as.numeric(dt11$PO4.hyphen.P)
+if (class(dt11$DOC)=="factor") dt11$DOC <-as.numeric(levels(dt11$DOC))[as.integer(dt11$DOC) ]               
+if (class(dt11$DOC)=="character") dt11$DOC <-as.numeric(dt11$DOC)
+if (class(dt11$DIC)=="factor") dt11$DIC <-as.numeric(levels(dt11$DIC))[as.integer(dt11$DIC) ]               
+if (class(dt11$DIC)=="character") dt11$DIC <-as.numeric(dt11$DIC)
+if (class(dt11$TDN)=="factor") dt11$TDN <-as.numeric(levels(dt11$TDN))[as.integer(dt11$TDN) ]               
+if (class(dt11$TDN)=="character") dt11$TDN <-as.numeric(dt11$TDN)
+if (class(dt11$TDP)=="factor") dt11$TDP <-as.numeric(levels(dt11$TDP))[as.integer(dt11$TDP) ]               
+if (class(dt11$TDP)=="character") dt11$TDP <-as.numeric(dt11$TDP)
+if (class(dt11$SiO2)=="factor") dt11$SiO2 <-as.numeric(levels(dt11$SiO2))[as.integer(dt11$SiO2) ]               
+if (class(dt11$SiO2)=="character") dt11$SiO2 <-as.numeric(dt11$SiO2)
+if (class(dt11$DOC)=="factor") dt11$DOC <-as.numeric(levels(dt11$DOC))[as.integer(dt11$DOC) ]               
+if (class(dt11$DOC)=="character") dt11$DOC <-as.numeric(dt11$DOC)
+if (class(dt11$TSS)=="factor") dt11$TSS <-as.numeric(levels(dt11$TSS))[as.integer(dt11$TSS) ]               
+if (class(dt11$TSS)=="character") dt11$TSS <-as.numeric(dt11$TSS)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt11$Code <- ifelse((trimws(as.character(dt11$Code))==trimws("-9999.00")),NA,dt11$Code)               
+suppressWarnings(dt11$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Code))==as.character(as.numeric("-9999.00"))),NA,dt11$Code))
+dt11$Sample_Time <- ifelse((trimws(as.character(dt11$Sample_Time))==trimws("-9999")),NA,dt11$Sample_Time)               
+suppressWarnings(dt11$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt11$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt11$Sample_Time))
+dt11$Gage..paren.in.feet.paren. <- ifelse((trimws(as.character(dt11$Gage..paren.in.feet.paren.))==trimws("blank")),NA,dt11$Gage..paren.in.feet.paren.)               
+suppressWarnings(dt11$Gage..paren.in.feet.paren. <- ifelse(!is.na(as.numeric("blank")) & (trimws(as.character(dt11$Gage..paren.in.feet.paren.))==as.character(as.numeric("blank"))),NA,dt11$Gage..paren.in.feet.paren.))
+dt11$Temp <- ifelse((trimws(as.character(dt11$Temp))==trimws("-9999.00")),NA,dt11$Temp)               
+suppressWarnings(dt11$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Temp))==as.character(as.numeric("-9999.00"))),NA,dt11$Temp))
+dt11$pH <- ifelse((trimws(as.character(dt11$pH))==trimws("BLANK")),NA,dt11$pH)               
+suppressWarnings(dt11$pH <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt11$pH))==as.character(as.numeric("BLANK"))),NA,dt11$pH))
+dt11$Cond <- ifelse((trimws(as.character(dt11$Cond))==trimws("-9999.00")),NA,dt11$Cond)               
+suppressWarnings(dt11$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Cond))==as.character(as.numeric("-9999.00"))),NA,dt11$Cond))
+dt11$Cl <- ifelse((trimws(as.character(dt11$Cl))==trimws("-9999.00")),NA,dt11$Cl)               
+suppressWarnings(dt11$Cl <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Cl))==as.character(as.numeric("-9999.00"))),NA,dt11$Cl))
+dt11$SO4.hyphen.S <- ifelse((trimws(as.character(dt11$SO4.hyphen.S))==trimws("-9999.00")),NA,dt11$SO4.hyphen.S)               
+suppressWarnings(dt11$SO4.hyphen.S <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$SO4.hyphen.S))==as.character(as.numeric("-9999.00"))),NA,dt11$SO4.hyphen.S))
+dt11$Na <- ifelse((trimws(as.character(dt11$Na))==trimws("-9999.00")),NA,dt11$Na)               
+suppressWarnings(dt11$Na <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Na))==as.character(as.numeric("-9999.00"))),NA,dt11$Na))
+dt11$K <- ifelse((trimws(as.character(dt11$K))==trimws("-9999.00")),NA,dt11$K)               
+suppressWarnings(dt11$K <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$K))==as.character(as.numeric("-9999.00"))),NA,dt11$K))
+dt11$Mg <- ifelse((trimws(as.character(dt11$Mg))==trimws("-9999.00")),NA,dt11$Mg)               
+suppressWarnings(dt11$Mg <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Mg))==as.character(as.numeric("-9999.00"))),NA,dt11$Mg))
+dt11$Ca <- ifelse((trimws(as.character(dt11$Ca))==trimws("-9999.00")),NA,dt11$Ca)               
+suppressWarnings(dt11$Ca <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$Ca))==as.character(as.numeric("-9999.00"))),NA,dt11$Ca))
+dt11$NH4 <- ifelse((trimws(as.character(dt11$NH4))==trimws("none")),NA,dt11$NH4)               
+suppressWarnings(dt11$NH4 <- ifelse(!is.na(as.numeric("none")) & (trimws(as.character(dt11$NH4))==as.character(as.numeric("none"))),NA,dt11$NH4))
+dt11$PO4.hyphen.P <- ifelse((trimws(as.character(dt11$PO4.hyphen.P))==trimws("-9999.00")),NA,dt11$PO4.hyphen.P)               
+suppressWarnings(dt11$PO4.hyphen.P <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$PO4.hyphen.P))==as.character(as.numeric("-9999.00"))),NA,dt11$PO4.hyphen.P))
+dt11$DIC <- ifelse((trimws(as.character(dt11$DIC))==trimws("-9999.00")),NA,dt11$DIC)               
+suppressWarnings(dt11$DIC <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$DIC))==as.character(as.numeric("-9999.00"))),NA,dt11$DIC))
+dt11$TDN <- ifelse((trimws(as.character(dt11$TDN))==trimws("-9999.00")),NA,dt11$TDN)               
+suppressWarnings(dt11$TDN <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$TDN))==as.character(as.numeric("-9999.00"))),NA,dt11$TDN))
+dt11$TDP <- ifelse((trimws(as.character(dt11$TDP))==trimws("-9999.00")),NA,dt11$TDP)               
+suppressWarnings(dt11$TDP <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$TDP))==as.character(as.numeric("-9999.00"))),NA,dt11$TDP))
+dt11$SiO2 <- ifelse((trimws(as.character(dt11$SiO2))==trimws("-9999.00")),NA,dt11$SiO2)               
+suppressWarnings(dt11$SiO2 <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$SiO2))==as.character(as.numeric("-9999.00"))),NA,dt11$SiO2))
+dt11$TSS <- ifelse((trimws(as.character(dt11$TSS))==trimws("-9999.00")),NA,dt11$TSS)               
+suppressWarnings(dt11$TSS <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt11$TSS))==as.character(as.numeric("-9999.00"))),NA,dt11$TSS))
+
+
+# Here is the structure of the input data frame:
+str(dt11)                            
+attach(dt11)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Sample_ID)
+summary(Code)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage..paren.in.feet.paren.)
+summary(Temp)
+summary(pH)
+summary(Cond)
+summary(Cl)
+summary(NO3.hyphen.N)
+summary(SO4.hyphen.S)
+summary(Na)
+summary(K)
+summary(Mg)
+summary(Ca)
+summary(NH4)
+summary(PO4.hyphen.P)
+summary(DOC)
+summary(DIC)
+summary(TDN)
+summary(TDP)
+summary(SiO2)
+summary(DOC)
+summary(TSS) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt11$Sample_ID))
+detach(dt11)               
+         
+
+inUrl12  <- "https://pasta.lternet.edu/package/data/eml/knb-lter-luq/20/4923052/ef01a691d7915bb3a8d6b0b69dc2b4ba" 
+infile12 <- tempfile()
+try(download.file(inUrl12,infile12,method="curl"))
+if (is.na(file.size(infile12))) download.file(inUrl12,infile12,method="auto")
+
+                   
+ dt12 <-read.csv(infile12,header=F 
+          ,skip=1
+            ,sep=","  
+        , col.names=c(
+                    "Code",     
+                    "Sample_ID",     
+                    "Sample_Date",     
+                    "Sample_Time",     
+                    "Gage_Ht",     
+                    "Temp",     
+                    "pH",     
+                    "Cond"    ), check.names=TRUE)
+               
+unlink(infile12)
+		    
+# Fix any interval or ratio columns mistakenly read in as nominal and nominal columns read as numeric or dates read as strings
+                
+if (class(dt12$Code)=="factor") dt12$Code <-as.numeric(levels(dt12$Code))[as.integer(dt12$Code) ]               
+if (class(dt12$Code)=="character") dt12$Code <-as.numeric(dt12$Code)
+if (class(dt12$Sample_ID)!="factor") dt12$Sample_ID<- as.factor(dt12$Sample_ID)                                   
+# attempting to convert dt12$Sample_Date dateTime string to R date structure (date or POSIXct)                                
+tmpDateFormat<-"%d/%m/%Y"
+tmp12Sample_Date<-as.Date(dt12$Sample_Date,format=tmpDateFormat)
+# Keep the new dates only if they all converted correctly
+if(length(tmp12Sample_Date) == length(tmp12Sample_Date[!is.na(tmp12Sample_Date)])){dt12$Sample_Date <- tmp12Sample_Date } else {print("Date conversion failed for dt12$Sample_Date. Please inspect the data and do the date conversion yourself.")}                                                                    
+rm(tmpDateFormat,tmp12Sample_Date) 
+if (class(dt12$Sample_Time)=="factor") dt12$Sample_Time <-as.numeric(levels(dt12$Sample_Time))[as.integer(dt12$Sample_Time) ]               
+if (class(dt12$Sample_Time)=="character") dt12$Sample_Time <-as.numeric(dt12$Sample_Time)
+if (class(dt12$Gage_Ht)=="factor") dt12$Gage_Ht <-as.numeric(levels(dt12$Gage_Ht))[as.integer(dt12$Gage_Ht) ]               
+if (class(dt12$Gage_Ht)=="character") dt12$Gage_Ht <-as.numeric(dt12$Gage_Ht)
+if (class(dt12$Temp)=="factor") dt12$Temp <-as.numeric(levels(dt12$Temp))[as.integer(dt12$Temp) ]               
+if (class(dt12$Temp)=="character") dt12$Temp <-as.numeric(dt12$Temp)
+if (class(dt12$pH)=="factor") dt12$pH <-as.numeric(levels(dt12$pH))[as.integer(dt12$pH) ]               
+if (class(dt12$pH)=="character") dt12$pH <-as.numeric(dt12$pH)
+if (class(dt12$Cond)=="factor") dt12$Cond <-as.numeric(levels(dt12$Cond))[as.integer(dt12$Cond) ]               
+if (class(dt12$Cond)=="character") dt12$Cond <-as.numeric(dt12$Cond)
+                
+# Convert Missing Values to NA for non-dates
+                
+dt12$Code <- ifelse((trimws(as.character(dt12$Code))==trimws("-9999.00")),NA,dt12$Code)               
+suppressWarnings(dt12$Code <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt12$Code))==as.character(as.numeric("-9999.00"))),NA,dt12$Code))
+dt12$Sample_Time <- ifelse((trimws(as.character(dt12$Sample_Time))==trimws("-9999")),NA,dt12$Sample_Time)               
+suppressWarnings(dt12$Sample_Time <- ifelse(!is.na(as.numeric("-9999")) & (trimws(as.character(dt12$Sample_Time))==as.character(as.numeric("-9999"))),NA,dt12$Sample_Time))
+dt12$Gage_Ht <- ifelse((trimws(as.character(dt12$Gage_Ht))==trimws("-9999.00")),NA,dt12$Gage_Ht)               
+suppressWarnings(dt12$Gage_Ht <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt12$Gage_Ht))==as.character(as.numeric("-9999.00"))),NA,dt12$Gage_Ht))
+dt12$Gage_Ht <- ifelse((trimws(as.character(dt12$Gage_Ht))==trimws("BLANK")),NA,dt12$Gage_Ht)               
+suppressWarnings(dt12$Gage_Ht <- ifelse(!is.na(as.numeric("BLANK")) & (trimws(as.character(dt12$Gage_Ht))==as.character(as.numeric("BLANK"))),NA,dt12$Gage_Ht))
+dt12$Temp <- ifelse((trimws(as.character(dt12$Temp))==trimws("-9999.00")),NA,dt12$Temp)               
+suppressWarnings(dt12$Temp <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt12$Temp))==as.character(as.numeric("-9999.00"))),NA,dt12$Temp))
+dt12$pH <- ifelse((trimws(as.character(dt12$pH))==trimws("-9999.00")),NA,dt12$pH)               
+suppressWarnings(dt12$pH <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt12$pH))==as.character(as.numeric("-9999.00"))),NA,dt12$pH))
+dt12$Cond <- ifelse((trimws(as.character(dt12$Cond))==trimws("-9999.00")),NA,dt12$Cond)               
+suppressWarnings(dt12$Cond <- ifelse(!is.na(as.numeric("-9999.00")) & (trimws(as.character(dt12$Cond))==as.character(as.numeric("-9999.00"))),NA,dt12$Cond))
+
+
+# Here is the structure of the input data frame:
+str(dt12)                            
+attach(dt12)                            
+# The analyses below are basic descriptions of the variables. After testing, they should be replaced.                 
+
+summary(Code)
+summary(Sample_ID)
+summary(Sample_Date)
+summary(Sample_Time)
+summary(Gage_Ht)
+summary(Temp)
+summary(pH)
+summary(Cond) 
+                # Get more details on character variables
+                 
+summary(as.factor(dt12$Sample_ID))
+detach(dt12)               
+        
+```
+
+
