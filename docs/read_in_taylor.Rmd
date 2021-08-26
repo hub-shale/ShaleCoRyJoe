@@ -10,6 +10,7 @@ library(here)
 library(janitor)
 library(lubridate)
 library(skimr)
+library(patchwork)
 ```
 
 # Read in the Data from the Taylor server from EDS214 -> ShaleCoRyJoe
@@ -69,5 +70,51 @@ combined_data = rbind(Q1.1, Q2.1, Q3.1, PRM.1)
 write_csv(combined_data, "creek_data_combined.csv")
 ```
 
+```{r}
+data_ends = combined_data %>% filter(sample_date == "2012-12-26")
+
+q = ggplot(combined_data, 
+           aes(x = sample_date,
+               y = k_daily_mean,
+               color = sample_id)) +
+  geom_line(aes(linetype = sample_id),
+            show.legend = FALSE) +
+        labs(x = "Year",
+             y = "K concentration (mg/l)") +
+  geom_text_repel(data = data_ends,
+                  aes(color = sample_id,
+                      label = sample_id),
+                  show.legend = FALSE) + 
+  facet_wrap(~ sample_id)
+
+q
+
+k = ggplot(combined_data,
+           aes(x = sample_date,
+               y = k_daily_mean,
+               color = sample_id)) +
+  geom_line(aes(linetype = sample_id),
+            size = 0.4, show.legend = FALSE) +
+        labs(x = "Year",
+             y = "K concentration (mg/l)") + 
+  theme(legend.title = element_blank())
+
+p
+
+no3 = ggplot(combined_data,
+           aes(x = sample_date,
+               y = no3_daily_mean,
+               color = sample_id)) +
+  geom_line(aes(linetype = sample_id),
+            size = 0.4) +
+        labs(x = "Year",
+             y = "NO3 concentration (μg/l)") + 
+  theme(legend.title = element_blank())
+
+d
+
+k/no3
+
+```
 
 
