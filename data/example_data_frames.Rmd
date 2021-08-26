@@ -1988,6 +1988,8 @@ dt3_clean = dt3 %>%
 practice_df = rbind(dt2_clean, dt3_clean) %>% 
         select(Sample_ID, Sample_Date, K)
 
+data_ends = practice_df %>% filter(Sample_Date == "2012-12-26")
+
 ggplot(practice_df, aes(x = Sample_Date, y = K)) + geom_line(aes(color = Sample_ID)) +
         labs(x = "Year", y = "Potassium concentration (mg/l)") + geom_text_repel(aes(label = Sample_ID[], color = Sample_ID))
 ```
