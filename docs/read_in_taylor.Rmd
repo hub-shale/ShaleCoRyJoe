@@ -1,0 +1,36 @@
+---
+title: "read_in_taylor"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+library(lubridate)
+library(skimr)
+```
+
+# Read in the Data from the Taylor server from EDS214 -> ShaleCoRyJoe
+```{r}
+Q1 = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "QuebradaCuenca1-Bisley.csv"), na = "-9999")
+
+Q2 = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "QuebradaCuenca2-Bisley.csv"), na = "-9999")
+
+Q3 = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "QuebradaCuenca3-Bisley.csv"), na = "-9999")
+
+PRM = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "RioMameyesPuenteRoto.csv"), na = "-9999")
+   
+```
+
+# Clean the data from the raw files
+Note, the units for all the chemistry data is the same per the metadata.
+
+```{r}
+Q1.1 = Q1 %>% 
+  clean_names()
+  
+# tomorrow, continue cleaning data and make dataframe that can be used to make the plot
+```
+
