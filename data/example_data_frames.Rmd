@@ -1974,5 +1974,21 @@ summary(as.factor(dt12$Sample_ID))
 detach(dt12)               
         
 ```
+```{r}
+library(dplyr)
+library(tidyverse)
+library(ggrepel)
 
+dt2_clean = dt2 %>%  
+        mutate(Sample_Date = lubridate::mdy_hm(Sample_Date))
+
+dt3_clean = dt3 %>% 
+        mutate(Sample_Date = lubridate::mdy(Sample_Date))
+
+practice_df = rbind(dt2_clean, dt3_clean) %>% 
+        select(Sample_ID, Sample_Date, K)
+
+ggplot(practice_df, aes(x = Sample_Date, y = K)) + geom_line(aes(color = Sample_ID)) +
+        labs(x = "Year", y = "Potassium concentration (mg/l)") + geom_text_repel(aes(label = Sample_ID[], color = Sample_ID))
+```
 
