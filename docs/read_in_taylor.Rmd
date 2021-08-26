@@ -66,6 +66,8 @@ PRM.1 = PRM %>%
 # Now that all four dataframes look the same, we need to combine them to one data frame for easy plotting.
 ```{r}
 combined_data = rbind(Q1.1, Q2.1, Q3.1, PRM.1)
+
+write_csv(combined_data, "creek_data_combined.csv")
 ```
 
 ```{r}

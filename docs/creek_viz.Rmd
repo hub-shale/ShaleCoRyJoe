@@ -1,0 +1,22 @@
+---
+title: "Data Visualization"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+## Creek data
+
+```{r}
+creek_data_combined = read_csv(here("docs", "creek_data_combined.csv"))
+```
+
+```{r}
+ggplot(data = creek_data_combined, aes(x= sample_date, y= k_daily_mean)) +
+  geom_line(aes(color = sample_id), size = .25)
+```
+
