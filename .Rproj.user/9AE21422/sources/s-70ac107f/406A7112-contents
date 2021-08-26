@@ -28,3 +28,7 @@ for (i in seq_along(knb_files)) {
 }
 ```
 
+
+This file is just for reference, showing a personalized way to load the raw data into R to begin wrangling.
+
+In the interest of time for this project, we are using the researcher's own wrangling code from https://portal.edirepository.org/nis/codeGeneration?packageId=knb-lter-luq.20.4923052&statisticalFileType=tidyr
