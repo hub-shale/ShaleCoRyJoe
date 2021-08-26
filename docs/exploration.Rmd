@@ -1,0 +1,84 @@
+---
+title: "Exploring data / problems"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Find how many NA values are in temp across 4 datasets
+
+```{r}
+PRM_temp <- PRM %>% 
+  count(Temp == "NA")
+
+Q1_temp <- Q1 %>% 
+  count(Temp == "NA")
+
+Q2_temp <- Q2 %>% 
+  count(Temp == "NA")
+
+Q3_temp <- Q3 %>% 
+  count(Temp == "NA")
+
+
+# It seems that 3/4 of the data values have a value for temperature, we consider that enough to continue exploration
+```
+
+Cleaning data to include temperature
+
+```{r}
+Q1.2 = Q1 %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, temp) %>% 
+  mutate(sample_date = mdy(sample_date)) %>% 
+  group_by(sample_id, sample_date) %>% 
+  summarize(temp_daily_mean = mean(temp))
+
+Q2.2 = Q2 %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, temp) %>% 
+  mutate(sample_date = mdy_hm(sample_date)) %>% 
+  group_by(sample_id, sample_date) %>% 
+  summarize(temp_daily_mean = mean(temp))
+
+Q3.2 = Q3 %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, temp) %>% 
+  mutate(sample_date = mdy(sample_date)) %>% 
+  group_by(sample_id, sample_date) %>% 
+  summarize(temp_daily_mean = mean(temp))
+
+PRM.2 = PRM %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, temp) %>% 
+  mutate(sample_date = mdy(sample_date)) %>% 
+  mutate(sample_id = str_replace(string = sample_id, pattern = "MPR", replacement = "PRM")) %>%
+  group_by(sample_id, sample_date) %>% 
+  summarize(temp_daily_mean = mean(temp))
+
+```
+
+Combined Temperature Data
+
+```{r}
+combined_data_temp <- rbind(Q1.2, Q2.2, Q3.2, PRM.2)
+```
+
+Plot Combined Temperature Data
+
+```{r}
+# eliminate 1 major outlier tat was recorded incorrectly (>1000 degrees celcius)
+
+combined_data_temp <- combined_data_temp %>% 
+  filter(temp_daily_mean < 1000, temp_daily_mean > 10)
+
+combined_data_temp_plot <- ggplot(data = combined_data_temp, aes(x = sample_date, y = temp_daily_mean, color = sample_id), na.rm = TRUE) +
+  geom_line() + 
+  facet_wrap(vars(sample_id))
+
+combined_data_temp_plot
+
+```
+
