@@ -25,15 +25,47 @@ PRM = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "RioMameyesPuent
 ```
 
 # Clean the data from the raw files
-Note, the units for all the chemistry data is the same per the metadata.
+Note, the units for all the chemistry data is the same per the metadata. The ".1" added to the original data frame names is to designate that they are different from the original read in data and have been wrangled.
 
 ```{r}
 Q1.1 = Q1 %>% 
-  clean_names()
+  clean_names() %>% 
+  select(sample_id, sample_date, k, no3) %>% 
+  mutate(sample_date = mdy(sample_date)) %>% 
+  group_by(sample_id, sample_date) %>% 
+  summarize(k_daily_mean = mean(k), 
+            no3_daily_mean = mean(no3))
 
+Q2.1 = Q2 %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, k, no3) %>% 
+  mutate(sample_date = mdy_hm(sample_date)) %>% 
+  group_by(sample_id, sample_date) %>% 
+  summarize(k_daily_mean = mean(k), 
+            no3_daily_mean = mean(no3))
 
-  
-# tomorrow, continue cleaning data and make dataframe that can be used to make the plot
+Q3.1 = Q3 %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, k, no3) %>% 
+  mutate(sample_date = mdy(sample_date)) %>% 
+  group_by(sample_id, sample_date) %>% 
+  summarize(k_daily_mean = mean(k), 
+            no3_daily_mean = mean(no3))
+
+PRM.1 = PRM %>% 
+  clean_names() %>% 
+  select(sample_id, sample_date, k, no3) %>% 
+  mutate(sample_date = mdy(sample_date)) %>% 
+  mutate(sample_id = str_replace(string = sample_id, pattern = "MPR", replacement = "PRM")) %>%
+  group_by(sample_id, sample_date) %>% 
+  summarize(k_daily_mean = mean(k), 
+            no3_daily_mean = mean(no3))
 ```
+
+# Now that all four dataframes look the same, we need to combine them to one data frame for easy plotting.
+```{r}
+combined_data = rbind(Q1.1, Q2.1, Q3.1, PRM.1)
+```
+
 
 
