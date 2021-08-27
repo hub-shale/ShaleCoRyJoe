@@ -83,10 +83,9 @@ no3 = ggplot(combined_data2,
   geom_line(aes(linetype = stream_sample),
             size = 0.4) + 
         labs(x = "Year",
-             y = "NO3 conc (μg/l)", size = 2, 
+             y = "NO3 (μg/l)", size = 2, 
              title = "Luquillo Mountains Stream Water NO3 & K Concentrations (2000-2012)", size = 4) + 
-  theme(legend.title = element_blank()) #+ scale_color_paletteer_d(palette = "ggthemes::manyeys")
-
+  theme(legend.title = element_blank()) 
 no3
 
 k = ggplot(combined_data2,
@@ -96,39 +95,16 @@ k = ggplot(combined_data2,
   geom_line(aes(linetype = stream_sample),
             size = 0.4) +
         labs(x = "Year",
-             y = "K conc (mg/l)", size = 2, 
+             y = "K (mg/l)", size = 2, 
              caption = 
              "Weekly concetrates of potassium and nitrate from sites in the Lucillo Mountains. 
-             NO3 conc (μg/l) = Nitrate concentrate per microgram per liter; 
-             K conc (mg/l) = Potasium concentrate per milligrams per liter;
+             NO3 (μg/l) = Nitrate per microgram per liter; 
+             K (mg/l) = Potasium per milligram per liter;
              PRM = Puente Roto Mameyes; Q1 = Quebrada uno-Bisley; Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley", size = 2) + 
   theme(legend.title = element_blank())
 
-k
-
-
-k_facet = ggplot(combined_data, 
-           aes(x = sample_date,
-               y = k_daily_mean,
-               color = sample_id)) +
-  geom_line(aes(linetype = sample_id),
-            show.legend = FALSE) +
-        labs(x = "Year") + 
-  facet_wrap(~ sample_id)
-
-
-no3_facet = ggplot(combined_data, 
-           aes(x = sample_date,
-               y = no3_daily_mean,
-               color = sample_id)) +
-  geom_line(aes(linetype = sample_id),
-            show.legend = FALSE) +
-        labs(x = "Year") +
-  facet_wrap(~ sample_id)
-
 no3/k
 
-no3_k_plot <- no3/k
 
 ggsave(here::here("docs", "k_no3_concentrations.png"), width = 8, height = 4)
 
