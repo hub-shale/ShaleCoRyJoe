@@ -125,8 +125,6 @@ no3_facet = ggplot(combined_data,
         labs(x = "Year") +
   facet_wrap(~ sample_id)
 
-d
-
 no3/k
 
 no3_k_plot <- no3/k
