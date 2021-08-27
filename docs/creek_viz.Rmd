@@ -8,7 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(here)
 library(ggplotlyExtra)
-library(zoo)
 library(tidyquant)
 ```
 
@@ -48,23 +47,25 @@ ggplot(data = creek_data_combined, aes(x= sample_date, y= k_daily_mean, color = 
 k = ggplot(data = creek_modern, aes(x= sample_date, y= k_daily_mean, color = sample_id)) +
   theme(legend.title = element_blank()) +
   labs(x = "Year",
-             y = "K conc (mg/l)", 
-             caption = "SMA of weekly concetrates of potassium and nitrate in from sites in the Lucillo Mountains,
-             calculated at 50 week intervals. NO3 (μg/l) = Nitrate conc per microgram per liter;
-             K (mg/l) = miligram per liter; PRM = Puente Roto Mameyes; Q1 = Quebrada uno-Bisley;
-             Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley",
+             y = "K (mg/l)", 
+             caption = "SMA of weekly concetrates of potassium and nitrate from sites in the Lucillo Mountains,
+             calculated at 50 week intervals. NO3 (μg/l) = Nitrate micrograms per liter;
+             K (mg/l) = Potassium milligrams per liter; PRM = Puente Roto Mameyes; 
+             Q1 = Quebrada uno-Bisley; Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley",
        size = 2) +
   geom_ma(ma_fun = SMA, n = 50, linetype = 5)
 
 no3 = ggplot(data = creek_modern, aes(x= sample_date, y= no3_daily_mean, color = sample_id)) +
   theme(legend.title = element_blank()) +
   labs(x = "Year",
-             y = "NO3 conc (μg/l)", 
+             y = "NO3 (μg/l)", 
              title = "Luquillo Mountains Stream Water NO3 & K Concentrations, 
-             yearly* simple moving average (2000-2012)", size = 4) +
+             Yearly* Simple Moving Average (2000-2012)", size = 4) +
   geom_ma(ma_fun = SMA, n = 50, linetype = 5)
 
 no3_k_plot <- no3/k
 no3_k_plot
+
+ggsave(here("docs", "SMA_conc.png"))
 ```
 
