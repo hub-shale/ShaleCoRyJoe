@@ -7,6 +7,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(here)
+library(ggplotlyExtra)
+library(zoo)
+library(tidyquant)
 ```
 
 ## Creek data
@@ -16,9 +19,52 @@ creek_data_combined = read_csv(here("docs", "creek_data_combined.csv"))
 ```
 
 ```{r}
-ggplot(data = creek_data_combined, aes(x= sample_date, y= k_daily_mean)) +
+ggplot(data = creek_data_combined, aes(x= sample_date, y= k_daily_mean, color = sample_id)) +
   geom_line(size = .25) +
   theme(legend.title = element_blank()) +
-  facet_wrap(~sample_id)
+  facet_wrap(~sample_id) +
+  geom_smooth()
+```
+
+```{r}
+creek_modern = creek_data_combined %>% 
+  filter(sample_date >= "2000-01-01")
+
+ggplot(data = creek_data_combined, aes(x= sample_date, y= k_daily_mean, color = sample_id)) +
+  geom_line(size = .25) +
+  theme(legend.title = element_blank())
+
+
+ggplot(data = creek_data_combined, aes(x= sample_date, y= k_daily_mean, color = sample_id)) +
+  theme(legend.title = element_blank()) +
+  geom_ma(ma_fun = SMA, n = 20, linetype = 1)
+  # geom_smooth()
+```
+
+
+
+
+```{r}
+k = ggplot(data = creek_modern, aes(x= sample_date, y= k_daily_mean, color = sample_id)) +
+  theme(legend.title = element_blank()) +
+  labs(x = "Year",
+             y = "K conc (mg/l)", 
+             caption = "SMA of weekly concetrates of potassium and nitrate in from sites in the Lucillo Mountains,
+             calculated at 50 week intervals. NO3 (μg/l) = Nitrate conc per microgram per liter;
+             K (mg/l) = miligram per liter; PRM = Puente Roto Mameyes; Q1 = Quebrada uno-Bisley;
+             Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley",
+       size = 2) +
+  geom_ma(ma_fun = SMA, n = 50, linetype = 5)
+
+no3 = ggplot(data = creek_modern, aes(x= sample_date, y= no3_daily_mean, color = sample_id)) +
+  theme(legend.title = element_blank()) +
+  labs(x = "Year",
+             y = "NO3 conc (μg/l)", 
+             title = "Luquillo Mountains Stream Water NO3 & K Concentrations, 
+             yearly* simple moving average (2000-2012)", size = 4) +
+  geom_ma(ma_fun = SMA, n = 50, linetype = 5)
+
+no3_k_plot <- no3/k
+no3_k_plot
 ```
 
