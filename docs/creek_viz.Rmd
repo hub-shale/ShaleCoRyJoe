@@ -61,10 +61,12 @@ no3 = ggplot(data = creek_modern, aes(x= sample_date, y= no3_daily_mean, color =
   labs(x = "Year",
              y = "NO3 conc (μg/l)", 
              title = "Luquillo Mountains Stream Water NO3 & K Concentrations, 
-             yearly* simple moving average (2000-2012)", size = 4) +
+             Yearly* Simple Moving Average (2000-2012)", size = 4) +
   geom_ma(ma_fun = SMA, n = 50, linetype = 5)
 
 no3_k_plot <- no3/k
 no3_k_plot
+
+ggsave(here("docs", "SMA_conc.png"))
 ```
 
