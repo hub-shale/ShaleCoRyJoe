@@ -1,13 +1,34 @@
 ---
-title: "Exploring data / problems"
+title: "Exploring Data"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+library(tidyverse)
+library(here)
+library(janitor)
+library(lubridate)
+library(skimr)
+library(patchwork)
+library(plotly)
 ```
 
-# Find how many NA values are in temp across 4 datasets
+
+### Read in Data
+```{r}
+Q1 = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "QuebradaCuenca1-Bisley.csv"), na = "-9999")
+
+Q2 = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "QuebradaCuenca2-Bisley.csv"), na = "-9999")
+
+Q3 = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "QuebradaCuenca3-Bisley.csv"), na = "-9999")
+
+PRM = read_csv(here("/courses","EDS214", "ShaleCoRyJoe","data", "RioMameyesPuenteRoto.csv"), na = "-9999")
+```
+
+
+
+### Find how many NA values are in temp across 4 datasets
 
 ```{r}
 PRM_temp <- PRM %>% 
@@ -26,7 +47,7 @@ Q3_temp <- Q3 %>%
 # It seems that 3/4 of the data values have a value for temperature, we consider that enough to continue exploration
 ```
 
-Cleaning data to include temperature
+### Cleaning data and including temperature
 
 ```{r}
 Q1.2 = Q1 %>% 
@@ -60,19 +81,20 @@ PRM.2 = PRM %>%
 
 ```
 
-Combined Temperature Data
+### Combining Temperature Data from the 4 Datasets
 
 ```{r}
 combined_data_temp <- rbind(Q1.2, Q2.2, Q3.2, PRM.2)
 ```
 
-Plot Combined Temperature Data
+### Plot Combined Temperature Data
 
 ```{r}
-# eliminate 1 major outlier tat was recorded incorrectly (>1000 degrees celcius)
+# eliminate 1 major outlier that was recorded incorrectly (>1000 degrees celcius)
 
 combined_data_temp <- combined_data_temp %>% 
   filter(temp_daily_mean < 1000, temp_daily_mean > 10)
+write_csv(combined_data_temp, "combined_data_temp.csv")
 
 combined_data_temp_plot <- ggplot(data = combined_data_temp, aes(x = sample_date, y = temp_daily_mean, color = sample_id), na.rm = TRUE) +
   geom_line() + 
@@ -81,4 +103,37 @@ combined_data_temp_plot <- ggplot(data = combined_data_temp, aes(x = sample_date
 combined_data_temp_plot
 
 ```
+```{r}
+plotly_plot <- ggplotly(combined_data_temp_plot)
+
+plotly_plot
+```
+
+
+Climate change temperature plotly 2000 - 2012
+
+```{r}
+combined_data_temp_climate <- combined_data_temp %>% 
+  filter(sample_date >= as.Date("2000-01-01"))
+
+combined_data_temp_climate_plot <- ggplot(data = combined_data_temp_climate,
+                                          aes(x = sample_date, 
+                                              y = temp_daily_mean,
+                                              color = sample_id)) +
+  geom_line() +
+  facet_wrap(vars(sample_id)) +
+  labs(
+    title = "Luquillo Watershed Temperature Data 2000 - 2012",
+    x = "Temperature (c)", 
+    y = "Date"
+  ) +
+   theme(plot.title = element_text(hjust = 0.5))
+
+combined_data_temp_climate_plot
+
+combined_data_temp_climate_plotly <- ggplotly(combined_data_temp_climate_plot)
+
+combined_data_temp_climate_plotly
+```
+
 
