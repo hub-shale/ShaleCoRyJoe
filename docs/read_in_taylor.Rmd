@@ -74,19 +74,18 @@ data_ends = combined_data %>% filter(sample_date == "2012-12-26")
 
 names(combined_data)[names(combined_data) == "sample_id"] = "stream_sample"
 
-combined_data2 = combined_data %>% filter(sample_date >= "1997-01-08")
+combined_data2 = combined_data %>% filter(sample_date >= "2000-01-01")
 
 no3 = ggplot(combined_data2,
            aes(x = sample_date,
                y = no3_daily_mean,
                color = stream_sample)) +
   geom_line(aes(linetype = stream_sample),
-            size = 0.4) +
+            size = 0.4) + 
         labs(x = "Year",
-             y = "NO3 concentration (μg/l)", 
-             title = "NO3 & K Concentrations in Stream Water from the 
-             Luquillo Mountains (1986-2012)", size = 4) +
-  theme(legend.title = element_blank())
+             y = "NO3 conc (μg/l)", size = 2, 
+             title = "Luquillo Mountains Stream Water NO3 & K Concentrations (2000-2012)", size = 4) + 
+  theme(legend.title = element_blank()) #+ scale_color_paletteer_d(palette = "ggthemes::manyeys")
 
 no3
 
@@ -95,12 +94,14 @@ k = ggplot(combined_data2,
                y = k_daily_mean,
                color = stream_sample)) +
   geom_line(aes(linetype = stream_sample),
-            size = 0.4, show.legend = FALSE) +
+            size = 0.4) +
         labs(x = "Year",
-             y = "K concentration (mg/l)", 
-             caption = "Weekly concetrates of potassium and nitrate in from sites in the Lucillo Mountains. 
-             NO3 (μg/l) = Nitrate concentration per microgram per liter; K (mg/l) = miligram per liter;
-                PRM = Puente Roto Mameyes; Q1 = Quebrada uno-Bisley; Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley", size = 2) + 
+             y = "K conc (mg/l)", size = 2, 
+             caption = 
+             "Weekly concetrates of potassium and nitrate from sites in the Lucillo Mountains. 
+             NO3 conc (μg/l) = Nitrate concentrate per microgram per liter; 
+             K conc (mg/l) = Potasium concentrate per milligrams per liter;
+             PRM = Puente Roto Mameyes; Q1 = Quebrada uno-Bisley; Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley", size = 2) + 
   theme(legend.title = element_blank())
 
 k
