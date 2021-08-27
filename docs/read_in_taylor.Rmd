@@ -11,6 +11,7 @@ library(janitor)
 library(lubridate)
 library(skimr)
 library(patchwork)
+library(paletteer)
 ```
 
 # Read in the Data from the Taylor server from EDS214 -> ShaleCoRyJoe
@@ -71,28 +72,38 @@ combined_data = rbind(Q1.1, Q2.1, Q3.1, PRM.1)
 ```{r}
 data_ends = combined_data %>% filter(sample_date == "2012-12-26")
 
-no3 = ggplot(combined_data,
+names(combined_data)[names(combined_data) == "sample_id"] = "stream_sample"
+
+combined_data2 = combined_data %>% filter(sample_date >= "1997-01-08")
+
+no3 = ggplot(combined_data2,
            aes(x = sample_date,
                y = no3_daily_mean,
-               color = sample_id)) +
-  geom_line(aes(linetype = sample_id),
+               color = stream_sample)) +
+  geom_line(aes(linetype = stream_sample),
             size = 0.4) +
         labs(x = "Year",
-             y = "NO3 concentration (μg/l)") + 
+             y = "NO3 concentration (μg/l)", 
+             title = "NO3 & K Concentrations in Stream Water from the 
+             Luquillo Mountains (1986-2012)", size = 4) +
   theme(legend.title = element_blank())
 
 no3
 
-k = ggplot(combined_data,
+k = ggplot(combined_data2,
            aes(x = sample_date,
                y = k_daily_mean,
-               color = sample_id)) +
-  geom_line(aes(linetype = sample_id),
+               color = stream_sample)) +
+  geom_line(aes(linetype = stream_sample),
             size = 0.4, show.legend = FALSE) +
         labs(x = "Year",
-             y = "K concentration (mg/l)") + 
+             y = "K concentration (mg/l)", 
+             caption = "Weekly concetrates of potassium and nitrate in from sites in the Lucillo Mountains. 
+             NO3 (μg/l) = Nitrate concentration per microgram per liter; K (mg/l) = miligram per liter;
+                PRM = Puente Roto Mameyes; Q1 = Quebrada uno-Bisley; Q2 = Quebrada dos-Bisley; Q3 = Quebrada tres-Bisley", size = 2) + 
   theme(legend.title = element_blank())
 
+k
 
 
 k_facet = ggplot(combined_data, 
@@ -117,6 +128,10 @@ no3_facet = ggplot(combined_data,
 d
 
 no3/k
+
+no3_k_plot <- no3/k
+
+ggsave(here::here("docs", "k_no3_concentrations.png"), width = 8, height = 4)
 
 
 ```
